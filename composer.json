@@ -1,0 +1,11 @@
+{
+    "name": "ibu/rentacarsystem",
+    "description": "Web app for introduction to web course",
+    "authors": [
+        {
+            "name": "Mirza",
+            "email": "mirza.krupic@stu.ibu.edu.ba"
+        }
+    ],
+    "require": {}
+}
