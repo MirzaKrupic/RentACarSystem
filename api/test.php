@@ -3,6 +3,13 @@
 
   $user_dao = new UserDao();
 
-  $user = $user_dao->get_user_by_id("1");
+  $user1 = [
+    "first_name" => "Nedim",
+    "last_name" => "Bandzovic",
+    "mail" => "nedim.bandzovic@gmail.com",
+    "dob" => "2000-01-19",
+    "password" => "malcolmduerod"
+  ];
+  $user = $user_dao->add_user($user1);
   print_r($user);
 ?>
