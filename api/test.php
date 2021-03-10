@@ -6,10 +6,10 @@
   $user1 = [
     "first_name" => "Nedim",
     "last_name" => "Bandzovic",
-    "mail" => "nedim.bandzovic@gmail.com",
+    "mail" => "bandzovic.nedim@gmail.com",
     "dob" => "2000-01-19",
     "password" => "malcolmduerod"
   ];
-  $user = $user_dao->add_user($user1);
+  $user = $user_dao->update_user(3, $user1);
   print_r($user);
 ?>
