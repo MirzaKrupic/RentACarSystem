@@ -1,16 +1,15 @@
 <?php
   require_once dirname(__FILE__)."/dao/UserDao.class.php";
   require_once dirname(__FILE__)."/dao/CompanyDao.class.php";
+    require_once dirname(__FILE__)."/dao/BrandDao.class.php";
 
-  $user_dao = new CompanyDao();
+  $user_dao = new BrandDao();
 
   $user1 = [
-    "name"=> "Burch",
-    "address" => "Francuske Revolucije BB",
-    "mail" => "ibu@gmail.com"
+    "name"=> "Audi"
   ];
 
-  $user = $user_dao->get_all_companies();
+  $user = $user_dao->get_all_brands();
 
   print_r($user);
 
