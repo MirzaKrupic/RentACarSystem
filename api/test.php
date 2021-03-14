@@ -5,7 +5,7 @@
   require_once dirname(__FILE__)."/dao/CarDao.class.php";
   require_once dirname(__FILE__)."/dao/RentingDao.class.php";
 
-  $user_dao = new RentingDao();
+  $dao = new CarDao();
 
   $user1 = [
     "car_id" => 1,
@@ -14,7 +14,7 @@
     "return_date" => "2021-03-26"
   ];
 
-  $user = $user_dao->get_rent_by_return_date("2021-03-26");
+  $user = $dao->get_by_id(1);
 
   print_r($user);
 
