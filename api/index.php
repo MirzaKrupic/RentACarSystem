@@ -3,6 +3,7 @@ require_once dirname(__FILE__)."/dao/BaseDao.class.php";
 
 require_once dirname(__FILE__).'/../vendor/autoload.php';
 require_once dirname(__FILE__).'/dao/UserDao.class.php';
+require_once dirname(__FILE__).'/services/UserService.class.php';
 
 Flight::map('query', function($name, $default_value = NULL){
     $request = Flight::request();
@@ -13,6 +14,8 @@ Flight::map('query', function($name, $default_value = NULL){
 });
 
 Flight::register('userdao', 'UserDao');
+
+Flight::register('userservice', 'UserService');
 
 require_once dirname(__FILE__).'/routes/users.php';
 
