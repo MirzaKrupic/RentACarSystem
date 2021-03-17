@@ -1,10 +1,11 @@
 <?php
 
+require_once dirname(__FILE__).'/BaseService.class.php';
 require_once dirname(__FILE__).'/../dao/UserDao.class.php';
 
-class UserService{
+class UserService extends BaseService{
 
-  private $dao;
+  protected $dao;
 
   public function __construct(){
     $this->dao = new UserDao();
@@ -16,6 +17,12 @@ class UserService{
     }else{
       return ($this->dao->get_all($offset, $limit));
     }
+  }
+
+  public function add($user){
+  // validation of account data
+  if (!isset($user['name'])) throw new Exception("Name is missing");
+  return parent::add($user);
   }
 }
 ?>
