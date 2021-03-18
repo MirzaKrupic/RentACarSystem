@@ -13,8 +13,6 @@ Flight::map('query', function($name, $default_value = NULL){
     return $query_param;
 });
 
-Flight::register('userdao', 'UserDao');
-
 Flight::register('userservice', 'UserService');
 
 require_once dirname(__FILE__).'/routes/users.php';
