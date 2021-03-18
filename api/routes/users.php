@@ -5,8 +5,9 @@ Flight::route('GET /users', function(){
   $limit = Flight::query('limit', 10);
 
   $search = Flight::query('search');
+  $order = Flight::query('order', "-id");
 
-  Flight::json(Flight::userservice()->get_users($search, $offset, $limit));
+  Flight::json(Flight::userservice()->get_users($search, $offset, $limit, $order));
 });
 
 Flight::route('GET /users/@id', function($id){

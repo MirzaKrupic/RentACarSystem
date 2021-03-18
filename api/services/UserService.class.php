@@ -11,6 +11,14 @@ class UserService extends BaseService{
     $this->dao = new UserDao();
   }
 
+  public function get_users($search, $offset, $limit, $order){
+    if($search){
+      return $this->dao->get_users($search, $offset, $limit, $order);
+    }else{
+      return $this->dao->get_all($offset, $limit, $order);
+    }
+  }
+
   public function register($user){
   // validation of account data
   if (!isset($user['name'])) throw new Exception("Name is missing");
