@@ -7,15 +7,7 @@ class UserDao extends BaseDao{
   }
 
   public function get_users($search, $offset, $limit, $order ="-id"){
-    switch(substr($order, 0, 1)){
-      case '-': $order_direction = "ASC"; break;
-      case '+': $order_direction = "DESC"; break;
-      default: throw new Exception("Invalid order format. First character should be either + or -"); break;
-    };
-
-    $order_column =  substr($order,1);
-
-    //     $order_column = $this->connection->quote(substr($order,1));
+    list($order_column, $order_direction) = self::parse_order($order);
 
     return $this->query("SELECT * FROM users
                         WHERE LOWER(name) LIKE CONCAT('%', :name, '%')
