@@ -6,14 +6,9 @@ require_once dirname(__FILE__).'/services/UserService.class.php';
 require_once dirname(__FILE__).'/services/CarService.class.php';
 
 /* Error handling for API */
-Flight::map('error', function(Exception $ex){
+/*Flight::map('error', function(Exception $ex){
   Flight::json(["message" => $ex->getMessage()], $ex->getCode());
-});
-
-/* Error handling for API */
-Flight::map('error', function(Exception $ex){
-  Flight::json(["message" => $ex->getMessage()], $ex->getCode());
-});
+}); */
 
 Flight::map('query', function($name, $default_value = NULL){
     $request = Flight::request();
