@@ -17,7 +17,18 @@ class CarService extends BaseService{
 
   public function add($car){
     $car['created_at'] = date(Config::DATE_FORMAT);
+    $car['token'] = md5(random_bytes(16));
     return parent::add($car);
+  }
+
+  public function confirm($token){
+    $company = $this->dao->get_company_by_token($token);
+
+    if(!isset($company['id'])) throw Exception("Invalid token");
+
+    $this->dao->update($company['id'], ["status" => "ACTIVE"]);
+
+    //send email
   }
 
 }
