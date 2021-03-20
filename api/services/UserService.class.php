@@ -22,6 +22,9 @@ class UserService extends BaseService{
   public function register($user){
   // validation of account data
   if (!isset($user['name'])) throw new Exception("Name is missing");
+
+  try{
+
   $user = parent::add([
     "name" => $user['name'],
     "mail" => $user['mail'],
@@ -33,6 +36,13 @@ class UserService extends BaseService{
     "token" => md5(random_bytes(16))
   ]);
 
+}catch(\Exception $e){
+  if(strpos($e->getMessage(), 'users.uq_user_email')){
+    throw new Exception("Account with same email exists in the database", 400, $e);
+  }else{
+    throw $e;
+  }
+}
   //send token
 
   return $user;
