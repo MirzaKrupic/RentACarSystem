@@ -7,7 +7,8 @@ class CarDao extends BaseDao{
     parent::__construct("cars");
   }
 
-  public function get_cars($owner_id, $offset, $limit, $search){
+  public function get_cars($owner_id, $offset, $limit, $search, $order){
+    list($order_column, $order_direction) = self::parse_order($order);
     $params = ["owner_id" => $owner_id];
     $query = "SELECT *
               FROM cars
@@ -16,6 +17,7 @@ class CarDao extends BaseDao{
         $query .= "AND LOWER(model) LIKE CONCAT('%', :search, '%') ";
         $params['search'] = strtolower($search);
     }
+    $query .= "ORDER BY ${order_column} ${order_direction} ";
     $query .= "LIMIT ${limit} OFFSET ${offset}";
     return $this->query($query, $params);
   }

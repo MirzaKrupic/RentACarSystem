@@ -5,8 +5,9 @@ Flight::route('GET /cars', function(){
   $limit = Flight::query('limit', 10);
   $offset = Flight::query('offset', 0);
   $search = Flight::query('search');
+  $order = Flight::query('order', '-id');
 
-  Flight::json(Flight::carservice()->get_cars($owner_id, $offset, $limit, $search));
+  Flight::json(Flight::carservice()->get_cars($owner_id, $offset, $limit, $search, $order));
 });
 
 Flight::route('POST /cars', function(){
