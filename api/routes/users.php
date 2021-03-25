@@ -68,7 +68,6 @@ Flight::route('POST /users/register', function(){
 });
 
 /**
-
 *
  * @OA\Get(
  *     path="/users/confirm/{token}",tags={"user"},
