@@ -11,13 +11,12 @@ class CarService extends BaseService{
     $this->dao = new CarDao();
   }
 
-  public function get_cars($owner_id, $offset, $limit, $search, $order){
+  public function get_cars($owner_id,$offset, $limit, $search, $order){
     return $this->dao->get_cars($owner_id, $offset, $limit, $search, $order);
   }
 
   public function add($car){
     $car['created_at'] = date(Config::DATE_FORMAT);
-    $car['token'] = md5(random_bytes(16));
     return parent::add($car);
   }
 
