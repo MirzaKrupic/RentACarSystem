@@ -28,8 +28,6 @@ private $mailer;
 
         // Send the message
         $this->mailer->send($message);
-echo $user['mail'];
-        echo 'Email has been sent.';
     } catch(Exception $e) {
         echo $e->getMessage();
     }
