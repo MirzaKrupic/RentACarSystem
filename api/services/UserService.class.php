@@ -2,13 +2,16 @@
 
 require_once dirname(__FILE__).'/BaseService.class.php';
 require_once dirname(__FILE__).'/../dao/UserDao.class.php';
+require_once dirname(__FILE__).'/../clients/SMTPClient.class.php';
 
 class UserService extends BaseService{
 
   protected $dao;
+  private $smtpClient;
 
   public function __construct(){
     $this->dao = new UserDao();
+    $this->smtpClient = new SMTPClient();
   }
 
   public function get_users($search, $offset, $limit, $order){
@@ -25,7 +28,7 @@ class UserService extends BaseService{
 
   try{
 
-  $user = parent::add([
+  $user = [
     "name" => $user['name'],
     "mail" => $user['mail'],
     "dob" => $user['dob'],
@@ -34,7 +37,9 @@ class UserService extends BaseService{
     "role" => "USER",
     "created_at" => date(Config::DATE_FORMAT),
     "token" => md5(random_bytes(16))
-  ]);
+  ];
+
+  parent::add($user);
 
 }catch(\Exception $e){
   if(strpos($e->getMessage(), 'users.uq_user_email')){
@@ -44,7 +49,7 @@ class UserService extends BaseService{
   }
 }
   //send token
-
+  $this->smtpClient->send_register_user_token($user);
   return $user;
   }
 
