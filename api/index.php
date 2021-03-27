@@ -25,6 +25,10 @@ Flight::route('GET /swagger', function(){
   echo $openapi->toJson();
 });
 
+Flight::route('GET /', function(){
+  Flight::redirect('/docs/index.php');
+});
+
 
 Flight::register('userservice', 'UserService');
 Flight::register('carservice', 'CarService');
