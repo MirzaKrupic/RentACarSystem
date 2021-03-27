@@ -14,6 +14,14 @@ class UserService extends BaseService{
     $this->smtpClient = new SMTPClient();
   }
 
+  public function reset($user){
+  $db_user = $this->dao->get_user_by_token($user['token']);
+
+  if (!isset($db_user['id'])) throw new Exception("Invalid token", 400);
+
+  $this->dao->update($db_user['id'], ['password' => md5($user['password']), 'token' => NULL]);
+}
+
   public function get_users($search, $offset, $limit, $order){
     if($search){
       return $this->dao->get_users($search, $offset, $limit, $order);
@@ -21,6 +29,20 @@ class UserService extends BaseService{
       return $this->dao->get_all($offset, $limit, $order);
     }
   }
+
+  public function forgot($user){
+    $db_user = $this->dao->get_user_by_email($user['mail']);
+
+
+    if (!isset($db_user['id'])) throw new Exception("User doesn't exists", 400);
+
+    // generate token - and save it to db
+    $db_user = $this->update($db_user['id'], ['token' => md5(random_bytes(16))]);
+
+    // send email
+    $this->smtpClient->send_user_recovery_token($db_user);
+  }
+
 
   public function login($user){
     $db_user = $this->dao->get_user_by_email($user['mail']);

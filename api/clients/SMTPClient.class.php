@@ -33,6 +33,23 @@ private $mailer;
     }
   }
 
+  public function send_user_recovery_token($user){
+    try {
+        // Create a message
+        $message = (new Swift_Message('Reset Your Password'))
+          ->setFrom(['mirza.krupic@stu.ibu.edu.ba' => 'Rent a car'])
+          ->setTo([$user['mail']])
+          ->setBody('Here is the recovery token: '.$user['token'])
+          ->setContentType('text/html')
+        ;
+
+        // Send the message
+        $this->mailer->send($message);
+    } catch(Exception $e) {
+        echo $e->getMessage();
+    }
+}
+
 
 }
 
