@@ -8,7 +8,8 @@
  *       url="http://localhost/rentacarsystem/api/",
  *       description="Development Enviroment"
  *   )
- * )
+ * ),
+ * @OA\SecurityScheme(securityScheme="ApiKeyAuth", type="apiKey", in="header", name="Authentication" )
  */
 
 /**
@@ -36,14 +37,23 @@ Flight::route('GET /users', function(){
 /**
 *
  * @OA\Get(
- *     path="/users/{id}",tags={"user"},
+ *     path="/users/{id}",tags={"user"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of account"),
  *     @OA\Response(response="200", description="List users from database by ID")
  * )
  */
 
 Flight::route('GET /users/@id', function($id){
-  Flight::json(Flight::userservice()->get_by_id($id));
+  $headers = getallheaders();
+  $token = @$headers['Authentication'];
+  try {
+      $decoded = (array)\Firebase\JWT\JWT::decode($token, 'JWT SECRET', array('HS256'));
+      Flight::json(Flight::userservice()->get_by_id($id));
+  } catch (\Exception $e) {
+      Flight::json(["messsage" => $e->getMessage()], 401);
+  }
+
+
 });
 
 /**
