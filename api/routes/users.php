@@ -14,7 +14,7 @@
 
 /**
  * @OA\Get(
- *     path="/users", tags={"user"},
+ *     path="/users", tags={"user"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
  *     @OA\Parameter(type="string", in="query", name="search", description="Search string for accounts. Case insensitive search."),
@@ -44,20 +44,12 @@ Flight::route('GET /users', function(){
  */
 
 Flight::route('GET /users/@id', function($id){
-  $headers = getallheaders();
-  $token = @$headers['Authentication'];
-  try {
-      $decoded = (array)\Firebase\JWT\JWT::decode($token, 'JWT SECRET', array('HS256'));
-      Flight::json(Flight::userservice()->get_by_id($id));
-  } catch (\Exception $e) {
-      Flight::json(["messsage" => $e->getMessage()], 401);
-  }
-
+    Flight::json(Flight::userservice()->get_by_id($id));
 
 });
 
 /**
- * @OA\Post(path="/users/register", tags={"user"},
+ * @OA\Post(path="/users/register", tags={"user"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -79,7 +71,7 @@ Flight::route('POST /users/register', function(){
 });
 
 /**
- * @OA\Post(path="/users/login", tags={"user"},
+ * @OA\Post(path="/users/login", tags={"user"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -98,7 +90,7 @@ Flight::route('POST /users/login', function(){
 });
 
 /**
- * @OA\Post(path="/users/forgot", tags={"user"}, description="Send recovery URL to users email address",
+ * @OA\Post(path="/users/forgot", tags={"user"}, description="Send recovery URL to users email address", security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -117,7 +109,7 @@ Flight::route('POST /users/forgot', function(){
 });
 
 /**
- * @OA\Post(path="/users/reset", tags={"user"}, description="Reset users password using recovery token",
+ * @OA\Post(path="/users/reset", tags={"user"}, description="Reset users password using recovery token", security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -138,7 +130,7 @@ Flight::route('POST /users/reset', function(){
 /**
 *
  * @OA\Get(
- *     path="/users/confirm/{token}",tags={"user"},
+ *     path="/users/confirm/{token}",tags={"user"}, security={{"ApiKeyAuth": {}}},
  * @OA\Parameter(@OA\Schema(type="string"), in="path", name="token",  description="Token of user"
  * ),
  *     @OA\Response(response="200", description="Confirm registred user")
@@ -153,7 +145,7 @@ Flight::route('GET /users/confirm/@token', function($token){
 /**
 
  * @OA\Put(
- *     path="/users/{id}",tags={"user"},
+ *     path="/users/{id}",tags={"user"}, security={{"ApiKeyAuth": {}}},
  * @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1),
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",

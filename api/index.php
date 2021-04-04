@@ -37,6 +37,7 @@ Flight::register('carservice', 'CarService');
 Flight::register('companyservice', 'CompanyService');
 
 
+require_once dirname(__FILE__).'/routes/middleware.php';
 require_once dirname(__FILE__).'/routes/users.php';
 require_once dirname(__FILE__).'/routes/cars.php';
 require_once dirname(__FILE__).'/routes/companies.php';
