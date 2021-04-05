@@ -44,6 +44,7 @@ Flight::route('GET /users', function(){
  */
 
 Flight::route('GET /users/@id', function($id){
+    if(Flight::get('user')['id'] != $id) throw new Exception("This user is not for you");
     Flight::json(Flight::userservice()->get_by_id($id));
 
 });
