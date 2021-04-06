@@ -22,7 +22,24 @@ private $mailer;
         $message = (new Swift_Message('Confirm your account'))
           ->setFrom(['mirza.krupic@stu.ibu.edu.ba' => 'Rent a car'])
           ->setTo([$user['mail']])
-          ->setBody('Here is the confirmation link: http://localhost/rentacarsystem/api/users/confirm/'.$user['token'])
+          ->setBody('Here is the confirmation link: http://localhost/rentacarsystem/api/confirm/'.$user['token'])
+          ->setContentType('text/html')
+        ;
+
+        // Send the message
+        $this->mailer->send($message);
+    } catch(Exception $e) {
+        echo $e->getMessage();
+    }
+  }
+
+  public function send_register_company_token($user){
+    try {
+        // Create a message
+        $message = (new Swift_Message('Confirm your account'))
+          ->setFrom(['mirza.krupic@stu.ibu.edu.ba' => 'Rent a car'])
+          ->setTo([$user['mail']])
+          ->setBody('Here is the confirmation link: http://localhost/rentacarsystem/api/companiesconfirm/'.$user['token'])
           ->setContentType('text/html')
         ;
 

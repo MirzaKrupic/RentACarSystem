@@ -53,7 +53,7 @@ class UserService extends BaseService{
 
     if($db_user['password'] != md5($user['password'])) throw new Exception("Invalid password", 400);
 
-    $jwt = \Firebase\JWT\JWT::encode(["id" => $db_user["id"] , "r" => $db_user["role"]], "JWT SECRET");
+    $jwt = \Firebase\JWT\JWT::encode(["id" => $db_user["id"] , "r" => $db_user["role"]], Config::JWT_SECRET);
     return ["token" => $jwt];
   }
 
@@ -97,5 +97,15 @@ class UserService extends BaseService{
 
     //send email
   }
+
+  public function add($user){
+  // validation of account data
+  if (!isset($user['name'])) throw new Exception("Name is missing");
+  if (!isset($user['mail'])) throw new Exception("Mail is missing");
+  if (!isset($user['password'])) throw new Exception("Password is missing");
+  $user['created_at'] = date(Config::DATE_FORMAT);
+  $user['token'] = md5(random_bytes(16));
+  return parent::add($user);
+}
 }
 ?>

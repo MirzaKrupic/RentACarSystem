@@ -2,7 +2,7 @@
 
 /**
  * @OA\Get(
- *     path="/companies", tags={"companies"},
+ *     path="/admin/companies", tags={"admin","companies"},
  *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
  *     @OA\Parameter(type="string", in="query", name="search", description="Search string for companies. Case insensitive search."),
@@ -11,7 +11,7 @@
  * )
  */
 
-Flight::route('GET /companies', function(){
+Flight::route('GET /admin/companies', function(){
   $id = Flight::query('id');
   $limit = Flight::query('limit', 10);
   $offset = Flight::query('offset', 0);
@@ -21,8 +21,9 @@ Flight::route('GET /companies', function(){
   Flight::json(Flight::companyservice()->get_companies($id, $offset, $limit, $search, $order));
 });
 
+
 /**
- * @OA\Post(path="/companies", tags={"companies"},
+ * @OA\Post(path="/admin/companies", tags={"admin","companies"},
  *   @OA\RequestBody(description="Basic company info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -36,7 +37,7 @@ Flight::route('GET /companies', function(){
  * )
  */
 
-Flight::route('POST /companies', function(){
+Flight::route('POST /admin/companies', function(){
   $data = Flight::request()->data->getData();
   Flight::json(Flight::companyservice()->add($data));
 });
@@ -51,7 +52,7 @@ Flight::route('POST /companies', function(){
  * )
  */
 
-Flight::route('GET /companies/confirm/@token', function($token){
+Flight::route('GET /companiesconfirm/@token', function($token){
   Flight::companyservice()->confirm($token);
   Flight::json(["message" => "Your account has been activated."]);
 });

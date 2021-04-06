@@ -12,6 +12,9 @@ class Config {
   const SMTP_PORT = 465;
   const SMTP_USER ="mirza.krupic@stu.ibu.edu.ba";
   const SMTP_PASSWORD ="";
+
+  const JWT_SECRET = "y4KvQcZVqn3F7uxQvcFk";
+  const JWT_TOKEN_TIME = 604800;
 }
 
 ?>

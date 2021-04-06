@@ -2,13 +2,16 @@
 
 require_once dirname(__FILE__).'/BaseService.class.php';
 require_once dirname(__FILE__).'/../dao/CompanyDao.class.php';
+require_once dirname(__FILE__).'/../clients/SMTPClient.class.php';
 
 class CompanyService extends BaseService{
 
   protected $dao;
+  private $smtpClient;
 
   public function __construct(){
     $this->dao = new CompanyDao();
+    $this->smtpClient = new SMTPClient();
   }
 
   public function get_companies($id, $offset, $limit, $search, $order){
@@ -34,6 +37,36 @@ class CompanyService extends BaseService{
       }
     }
     return $company;
+  }
+
+  public function register($company){
+  // validation of account data
+  if (!isset($company['name'])) throw new Exception("Name is missing");
+
+  try{
+
+  $company = [
+    "name" => $company['name'],
+    "mail" => $company['mail'],
+    "address" => $company['address'],
+    "password" => md5($company['password']),
+    "status" => "PENDING",
+    "created_at" => date(Config::DATE_FORMAT),
+    "token" => md5(random_bytes(16))
+  ];
+
+  parent::add($company);
+
+}catch(\Exception $e){
+  if(strpos($e->getMessage(), 'companies.uq_company_email')){
+    throw new Exception("Company with same email exists in the database", 400, $e);
+  }else{
+    throw $e;
+  }
+}
+  //send token
+  $this->smtpClient->send_register_user_token($company);
+  return $company;
   }
 
   public function confirm($token){
