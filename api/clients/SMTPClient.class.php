@@ -39,7 +39,7 @@ private $mailer;
         $message = (new Swift_Message('Confirm your account'))
           ->setFrom(['mirza.krupic@stu.ibu.edu.ba' => 'Rent a car'])
           ->setTo([$user['mail']])
-          ->setBody('Here is the confirmation link: http://localhost/rentacarsystem/api/companiesconfirm/'.$user['token'])
+          ->setBody('Here is the confirmation link: http://localhost/rentacarsystem/api/companies/confirm/'.$user['token'])
           ->setContentType('text/html')
         ;
 

@@ -50,7 +50,7 @@ Flight::route('GET /admin/users/@id', function($id){
 });
 
 /**
- * @OA\Post(path="/register", tags={"user"}, security={{"ApiKeyAuth": {}}},
+ * @OA\Post(path="/user/register", tags={"user"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -66,20 +66,14 @@ Flight::route('GET /admin/users/@id', function($id){
  * )
  */
 
-Flight::route('POST /register', function(){
+Flight::route('POST /user/register', function(){
   $data = Flight::request()->data->getData();
-  if($data['type'] == 'user'){
-    Flight::userservice()->register($data);
-    Flight::json(["mssage" => "Confirmation email has been sent. Please confirm your account"]);
-  }
-  if($data['type'] == 'company'){
-    Flight::companyservice()->register($data);
-    Flight::json(["mssage" => "Confirmation email has been sent. Please confirm your account"]);
-  }
+  Flight::userservice()->register($data);
+  Flight::json(["mssage" => "Confirmation email has been sent. Please confirm your account"]);
 });
 
 /**
- * @OA\Post(path="/login", tags={"user"}, security={{"ApiKeyAuth": {}}},
+ * @OA\Post(path="/user/login", tags={"user"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -92,13 +86,13 @@ Flight::route('POST /register', function(){
  * )
  */
 
-Flight::route('POST /login', function(){
+Flight::route('POST /user/login', function(){
   $data = Flight::request()->data->getData();
   Flight::json(Flight::userservice()->login($data));
 });
 
 /**
- * @OA\Post(path="/forgot", tags={"user"}, description="Send recovery URL to users email address", security={{"ApiKeyAuth": {}}},
+ * @OA\Post(path="/user/forgot", tags={"user"}, description="Send recovery URL to users email address", security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -110,14 +104,14 @@ Flight::route('POST /login', function(){
  * )
  */
 
-Flight::route('POST /forgot', function(){
+Flight::route('POST /user/forgot', function(){
   $data = Flight::request()->data->getData();
   Flight::userservice()->forgot($data);
   Flight::json(["message" => "Recovery link has been sent to your email"]);
 });
 
 /**
- * @OA\Post(path="/reset", tags={"user"}, description="Reset users password using recovery token", security={{"ApiKeyAuth": {}}},
+ * @OA\Post(path="/user/reset", tags={"user"}, description="Reset users password using recovery token", security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -129,7 +123,7 @@ Flight::route('POST /forgot', function(){
  *  @OA\Response(response="200", description="Message that user has changed password.")
  * )
  */
-Flight::route('POST /reset', function(){
+Flight::route('POST /user/reset', function(){
   $data = Flight::request()->data->getData();
   Flight::userservice()->reset($data);
   Flight::json(["message" => "Your password has been changed"]);
@@ -138,14 +132,14 @@ Flight::route('POST /reset', function(){
 /**
 *
  * @OA\Get(
- *     path="/confirm/{token}",tags={"user"}, security={{"ApiKeyAuth": {}}},
+ *     path="/user/confirm/{token}",tags={"user"}, security={{"ApiKeyAuth": {}}},
  * @OA\Parameter(@OA\Schema(type="string"), in="path", name="token",  description="Token of user"
  * ),
  *     @OA\Response(response="200", description="Confirm registred user")
  * )
  */
 
-Flight::route('GET /confirm/@token', function($token){
+Flight::route('GET /user/confirm/@token', function($token){
   Flight::userservice()->confirm($token);
   Flight::json(["message" => "Your account has been activated."]);
 });

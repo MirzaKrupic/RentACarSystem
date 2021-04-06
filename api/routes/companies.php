@@ -2,7 +2,7 @@
 
 /**
  * @OA\Get(
- *     path="/admin/companies", tags={"admin","companies"},
+ *     path="/admin/companies", tags={"admin","companies"},security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
  *     @OA\Parameter(type="string", in="query", name="search", description="Search string for companies. Case insensitive search."),
@@ -23,7 +23,7 @@ Flight::route('GET /admin/companies', function(){
 
 
 /**
- * @OA\Post(path="/admin/companies", tags={"admin","companies"},
+ * @OA\Post(path="/admin/companies", tags={"admin","companies"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic company info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -43,16 +43,77 @@ Flight::route('POST /admin/companies', function(){
 });
 
 /**
+ * @OA\Post(path="/companies/register", tags={"companies"},
+ *   @OA\RequestBody(description="Basic user info", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+  *    				 @OA\Property(property="type", required="true", type="string", example="user/company",	description="Type of the user" ),
+ *    				 @OA\Property(property="name", required="true", type="string", example="My name",	description="Name of the user" ),
+ *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
+ *    				 @OA\Property(property="address", required="false", type="string", example="My address",	description="Address of company" ),
+ *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
+ *          )
+ *       )
+ *     ),
+ *  @OA\Response(response="200", description="Message that user has been created.")
+ * )
+ */
+
+Flight::route('POST /companies/register', function(){
+  $data = Flight::request()->data->getData();
+  Flight::companyservice()->register($data);
+  Flight::json(["mssage" => "Confirmation email has been sent. Please confirm your account"]);
+});
+
+/**
+ * @OA\Post(path="/companies/login", tags={"companies"},
+ *   @OA\RequestBody(description="Basic user info", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+ *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
+ *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
+ *          )
+ *       )
+ *     ),
+ *  @OA\Response(response="200", description="Message that user has been created.")
+ * )
+ */
+
+Flight::route('POST /companies/login', function(){
+  $data = Flight::request()->data->getData();
+  Flight::json(Flight::companyservice()->login($data));
+});
+
+/**
+ * @OA\Post(path="/companies/login", tags={"companies"}, security={{"ApiKeyAuth": {}}},
+ *   @OA\RequestBody(description="Basic user info", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+ *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
+ *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
+ *          )
+ *       )
+ *     ),
+ *  @OA\Response(response="200", description="Message that user has been created.")
+ * )
+ */
+
+Flight::route('POST /companies/login', function(){
+  $data = Flight::request()->data->getData();
+  Flight::json(Flight::companyservice()->login($data));
+});
+
+/**
 *
  * @OA\Get(
  *     path="/companies/confirm/{token}",tags={"companies"},
- * @OA\Parameter(@OA\Schema(type="string"), in="path", name="token",  description="Token of company"
+ * @OA\Parameter(@OA\Schema(type="string"), in="path", name="token",  description="Token of user"
  * ),
  *     @OA\Response(response="200", description="Confirm registred user")
  * )
  */
 
-Flight::route('GET /companiesconfirm/@token', function($token){
+Flight::route('GET /companies/confirm/@token', function($token){
   Flight::companyservice()->confirm($token);
   Flight::json(["message" => "Your account has been activated."]);
 });

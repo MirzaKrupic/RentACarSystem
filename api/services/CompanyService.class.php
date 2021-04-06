@@ -18,6 +18,17 @@ class CompanyService extends BaseService{
     return $this->dao->get_companies($id, $offset, $limit, $search, $order);
   }
 
+  public function login($company){
+      $db_user = $this->dao->get_company_by_email($company['mail']);
+      if(!isset($db_user['id'])) throw new Exception("User doesn't exist", 400);
+
+      if($db_user['password'] != md5($company['password'])) throw new Exception("Invalid password", 400);
+
+      $jwt = \Firebase\JWT\JWT::encode(["id" => $db_user["id"]] , Config::JWT_SECRET);
+
+      return ["token" => $jwt];
+  }
+
   public function add($company){
     if (!isset($company['name'])) throw new Exception("Name is missing");
 
@@ -65,7 +76,7 @@ class CompanyService extends BaseService{
   }
 }
   //send token
-  $this->smtpClient->send_register_user_token($company);
+  $this->smtpClient->send_register_company_token($company);
   return $company;
   }
 

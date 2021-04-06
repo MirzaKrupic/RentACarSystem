@@ -88,15 +88,7 @@ class UserService extends BaseService{
   return $user;
   }
 
-  public function confirm($token){
-    $user = $this->dao->get_user_by_token($token);
 
-    if(!isset($user['id'])) throw Exception("Invalid token");
-
-    $this->dao->update($user['id'], ["status" => "ACTIVE"]);
-
-    //send email
-  }
 
   public function add($user){
   // validation of account data
@@ -106,6 +98,16 @@ class UserService extends BaseService{
   $user['created_at'] = date(Config::DATE_FORMAT);
   $user['token'] = md5(random_bytes(16));
   return parent::add($user);
+}
+
+public function confirm($token){
+  $user = $this->dao->get_user_by_token($token);
+
+  if(!isset($user['id'])) throw Exception("Invalid token");
+
+  $this->dao->update($user['id'], ["status" => "ACTIVE"]);
+
+  //send email
 }
 }
 ?>

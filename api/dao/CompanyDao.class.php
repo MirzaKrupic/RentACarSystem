@@ -20,6 +20,10 @@ class CompanyDao extends BaseDao{
             $params['search'] = strtolower($search);
     return $this->query($query, $params);
   }
+
+  public function get_company_by_email($mail){
+    return $this->query_unique("SELECT * FROM companies WHERE mail = :mail", ["mail" => $mail]);
+  }
 }
 
 ?>
