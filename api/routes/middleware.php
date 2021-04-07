@@ -1,6 +1,6 @@
 <?php
 
-/* middleware for users */
+/* middleware for companies */
 Flight::route('/companies/*', function(){
   if(Flight::request()->url == '/companies/register' || Flight::request()->url == '/companies/forgot' || Flight::request()->url == '/companies/login' || Flight::request()->url == '/companies/reset') return TRUE;
   if(startsWith(Flight::request()->url, '/companies/confirm/')) return TRUE;

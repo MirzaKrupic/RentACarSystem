@@ -17,7 +17,7 @@
  *     path="/admin/users", tags={"admin", "user"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
- *     @OA\Parameter(type="string", in="query", name="search", description="Search string for accounts. Case insensitive search."),
+ *     @OA\Parameter(type="string", in="query", name="search", description="Search string for users. Case insensitive search."),
  *     @OA\Parameter(type="string", in="query", name="order", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name descending order by column_name"),
  *     @OA\Response(response="200", description="List users from database")
  * )
@@ -38,7 +38,7 @@ Flight::route('GET /admin/users', function(){
 *
  * @OA\Get(
  *     path="/admin/users/{id}",tags={"admin","user"}, security={{"ApiKeyAuth": {}}},
- *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of account"),
+ *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of user"),
  *     @OA\Response(response="200", description="List users from database by ID")
  * )
  */
@@ -54,10 +54,9 @@ Flight::route('GET /admin/users/@id', function($id){
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
-  *    				 @OA\Property(property="type", required="true", type="string", example="user/company",	description="Type of the user" ),
  *    				 @OA\Property(property="name", required="true", type="string", example="My name",	description="Name of the user" ),
  *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
- *    				 @OA\Property(property="dob", required="false", type="date", example="My date of birth",	description="Date of birth of the user" ),
+ *    				 @OA\Property(property="dob", required="false", type="date", example="xxxx-xx-xx",	description="Date of birth of the user" ),
  *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
  *          )
  *       )
@@ -82,7 +81,7 @@ Flight::route('POST /user/register', function(){
  *          )
  *       )
  *     ),
- *  @OA\Response(response="200", description="Message that user has been created.")
+ *  @OA\Response(response="200", description="Message that user has been logged in.")
  * )
  */
 
@@ -193,12 +192,12 @@ Flight::route('PUT /users/@id', function($id){
  *    			@OA\Schema(
  *             @OA\Property(property="name", required="true", type="string", example="My name",	description="Name of the user" ),
  *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
- *    				 @OA\Property(property="dob", required="true", type="date", example="My date of birth",	description="Date of birth of the user" ),
+ *    				 @OA\Property(property="dob", required="true", type="date", example="xxxx-xx-xx",	description="Date of birth of the user" ),
  *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
  *          )
  *       )
  *     ),
- *  @OA\Response(response="200", description="Account that has been added into database with ID assigned.")
+ *  @OA\Response(response="200", description="User that has been added into database with ID assigned.")
  * )
  */
 Flight::route('POST /admin/users', function(){

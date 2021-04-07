@@ -27,13 +27,14 @@ Flight::route('GET /admin/companies', function(){
  *   @OA\RequestBody(description="Basic company info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
- *    				 @OA\Property(property="name", required="true", type="string", example="My name",	description="Name of the company" ),
+ *    				 @OA\Property(property="name", required="true", type="string", example="Companies name",	description="Name of the company" ),
+ *    				 @OA\Property(property="address", required="false", type="string", example="My address",	description="Address of company" ),
  *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="Company's email address" ),
  *    				 @OA\Property(property="address", required="true", type="string", example="Address 22",	description="Company's address" ),
  *          )
  *       )
  *     ),
- *  @OA\Response(response="200", description="Message that user has been created.")
+ *  @OA\Response(response="200", description="Message that company has been created.")
  * )
  */
 
@@ -44,18 +45,17 @@ Flight::route('POST /admin/companies', function(){
 
 /**
  * @OA\Post(path="/companies/register", tags={"companies"},
- *   @OA\RequestBody(description="Basic user info", required=true,
+ *   @OA\RequestBody(description="Basic company info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
-  *    				 @OA\Property(property="type", required="true", type="string", example="user/company",	description="Type of the user" ),
- *    				 @OA\Property(property="name", required="true", type="string", example="My name",	description="Name of the user" ),
- *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
+ *    				 @OA\Property(property="name", required="true", type="string", example="My name",	description="Name of the company" ),
+ *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="Company's email address" ),
  *    				 @OA\Property(property="address", required="false", type="string", example="My address",	description="Address of company" ),
  *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
  *          )
  *       )
  *     ),
- *  @OA\Response(response="200", description="Message that user has been created.")
+ *  @OA\Response(response="200", description="Message that company has been created.")
  * )
  */
 
@@ -67,34 +67,15 @@ Flight::route('POST /companies/register', function(){
 
 /**
  * @OA\Post(path="/companies/login", tags={"companies"},
- *   @OA\RequestBody(description="Basic user info", required=true,
+ *   @OA\RequestBody(description="Basic company info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
- *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
+ *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="Company's email address" ),
  *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
  *          )
  *       )
  *     ),
- *  @OA\Response(response="200", description="Message that user has been created.")
- * )
- */
-
-Flight::route('POST /companies/login', function(){
-  $data = Flight::request()->data->getData();
-  Flight::json(Flight::companyservice()->login($data));
-});
-
-/**
- * @OA\Post(path="/companies/login", tags={"companies"}, security={{"ApiKeyAuth": {}}},
- *   @OA\RequestBody(description="Basic user info", required=true,
- *       @OA\MediaType(mediaType="application/json",
- *    			@OA\Schema(
- *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
- *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
- *          )
- *       )
- *     ),
- *  @OA\Response(response="200", description="Message that user has been created.")
+ *  @OA\Response(response="200", description="Logged in")
  * )
  */
 
@@ -107,9 +88,9 @@ Flight::route('POST /companies/login', function(){
 *
  * @OA\Get(
  *     path="/companies/confirm/{token}",tags={"companies"},
- * @OA\Parameter(@OA\Schema(type="string"), in="path", name="token",  description="Token of user"
+ * @OA\Parameter(@OA\Schema(type="string"), in="path", name="token",  description="Token of company"
  * ),
- *     @OA\Response(response="200", description="Confirm registred user")
+ *     @OA\Response(response="200", description="Confirm registred company")
  * )
  */
 
