@@ -28,7 +28,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body>
+    <body style="display:none;">
 
         <div class="container">
             <div class="row">
@@ -63,6 +63,14 @@
         <script src="./assets/js/bootstrap.min.js"></script>
 
         <script type="text/javascript">
+        $(function(){
+          if(  window.localStorage.getItem("token")){
+            window.location = "index.html";
+          }else{
+            $('body').show();
+          }
+        });
+
           function doLogin(){
             var login_info = {
               "mail" : $("#email").val(),
@@ -70,10 +78,11 @@
             }
             $("#login-link").prop('disabled', true);
             $.post( "http://localhost/rentacarsystem/api/user/login", login_info ).done(function( data ) {
-                window.location = "index.html";
+              window.localStorage.setItem("token", data.token);
+              window.location = "index.html";
             }).fail(function(error) {
               $("#login-link").prop('disabled', false);
-                alert(error.responseJSON.message);
+              alert(error.responseJSON.message);
             });
           }
         </script>
