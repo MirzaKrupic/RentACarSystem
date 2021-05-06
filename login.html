@@ -131,12 +131,13 @@
                         <div class="panel-body">
                             <form role="form">
                                 <fieldset>
+                                    <input id="change-password-token" class="form-control" name="password" type="hidden">
 
                                     <div class="form-group">
                                         <input id="change-password" class="form-control" placeholder="Password" name="password" type="password" value="">
                                     </div>
                                     <!-- Change this to a button or input when using this as a form -->
-                                    <button id="login-link" onclick="doChangePassword();" class="btn btn-lg btn-success btn-block">Change Password</button>
+                                    <button id="change-link" onclick="doChangePassword();" class="btn btn-lg btn-success btn-block">Change Password</button>
                                 </fieldset>
                             </form>
                         </div>
@@ -158,7 +159,19 @@
           }else{
             $('body').show();
           }
+          var urlParams = new URLSearchParams(window.location.search);
+           if (urlParams.has('token')){
+             $("#change-password-token").val(urlParams.get('token'));
+             showChangePasswordForm();
+           }
         });
+
+        function showChangePasswordForm(){
+          $("#change-password-form-container").removeClass("hidden");
+          $("#login-form-container").addClass("hidden");
+          $("#register-form-container").addClass("hidden");
+          $("#forgot-form-container").addClass("hidden");
+        }
 
         function showForgotForm(){
           $("#login-form-container").addClass("hidden");
@@ -226,6 +239,22 @@
               $("#form-alert").removeClass("hidden");
               $("#form-alert .alert").html(error.responseJSON.message);
             });
+          }
+
+          function doChangePassword(){
+            var change_info = {
+              "token" : $("#change-password-token").val(),
+              "password" : $("#change-password").val()
+            }
+            $("#change-link").prop('disabled', true);
+            $.post( "http://localhost/rentacarsystem/api/user/reset", forgot_info ).done(function( data ) {
+              window.localStorage.setItem("token", data.token);
+              window.location = "index.html";
+            }).fail(function(error) {
+              $("#change-link").prop('disabled', false);
+              alert(error.responseJSON.message);
+            });
+          }
           }
         </script>
 
