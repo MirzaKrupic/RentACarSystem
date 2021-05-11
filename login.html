@@ -20,6 +20,7 @@
 
         <!-- Custom Fonts -->
         <link href="./assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" type="text/css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,7 +29,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body style="display:none;">
+    <body>
 
         <div class="container">
             <div id="login-form-container" class="row">
@@ -38,13 +39,13 @@
                             <h3 class="panel-title">Please Sign In</h3>
                         </div>
                         <div class="panel-body">
-                            <form role="form">
+                            <form id="login-form" role="form">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input id="email" class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                        <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input id="password" class="form-control" placeholder="Password" name="password" type="password" value="">
+                                        <input class="form-control" placeholder="Password" name="password" type="password" value="">
                                     </div>
                                     <!-- Change this to a button or input when using this as a form -->
                                     <button id="login-link" onclick="doLogin();" class="btn btn-lg btn-success btn-block">Login</button>
@@ -72,19 +73,19 @@
                             <h3 class="panel-title">Please Register</h3>
                         </div>
                         <div class="panel-body">
-                            <form role="form">
+                            <form id="register-form" role="form">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input id="register-name" class="form-control" placeholder="Your name" name="name" type="text" autofocus>
+                                        <input class="form-control" placeholder="Your name" name="name" type="text" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input id="register-email" class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                        <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input id="register-dob" class="form-control" placeholder="Your date of birth" name="dob" type="text" autofocus>
+                                        <input class="form-control" placeholder="Your date of birth" name="dob" type="text" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input id="register-password" class="form-control" placeholder="Password" name="password" type="password" value="">
+                                        <input class="form-control" placeholder="Password" name="password" type="password" value="">
                                     </div>
                                     <!-- Change this to a button or input when using this as a form -->
                                     <button id="register-link" onclick="doRegister();" class="btn btn-lg btn-success btn-block">Register</button>
@@ -105,10 +106,10 @@
                             <h3 class="panel-title">Forgot Password</h3>
                         </div>
                         <div class="panel-body">
-                            <form role="form">
+                            <form id="forgot-form" role="form">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input id="forgot-email" class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                        <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                                     </div>
                                     <!-- Change this to a button or input when using this as a form -->
                                     <button id="forgot-link" onclick="doForgotPassword();" class="btn btn-lg btn-success btn-block">Send recovery code</button>
@@ -129,9 +130,9 @@
                             <h3 class="panel-title">Change Password</h3>
                         </div>
                         <div class="panel-body">
-                            <form role="form">
+                            <form id="change-form" role="form">
                                 <fieldset>
-                                    <input id="change-password-token" class="form-control" name="password" type="hidden">
+                                    <input class="form-control" name="password" type="hidden">
 
                                     <div class="form-group">
                                         <input id="change-password" class="form-control" placeholder="Password" name="password" type="password" value="">
@@ -151,7 +152,8 @@
 
         <!-- Bootstrap Core JavaScript -->
         <script src="./assets/js/bootstrap.min.js"></script>
-
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="./assets/js/utils.js"></script>
         <script type="text/javascript">
         $(function(){
           if(  window.localStorage.getItem("token")){
@@ -197,7 +199,7 @@
             "password" : $("#register-password").val()
           }
           $("#register-link").prop('disabled', true);
-          $.post( "http://localhost/rentacarsystem/api/user/register", register_info ).done(function( data ) {
+          $.post( "http://localhost/rentacarsystem/api/user/register", jsonize_form("#register-form")).done(function( data ) {
             console.log(data);
             $("#register-form-container").addClass("hidden");
             window.location = "login.html";
@@ -209,17 +211,14 @@
         }
 
           function doLogin(){
-            var login_info = {
-              "mail" : $("#email").val(),
-              "password" : $("#password").val()
-            }
+
             $("#login-link").prop('disabled', true);
-            $.post( "http://localhost/rentacarsystem/api/user/login", login_info ).done(function( data ) {
+            $.post( "http://localhost/rentacarsystem/api/user/login", jsonize_form("#login-form")).done(function( data ) {
               window.localStorage.setItem("token", data.token);
               window.location = "index.html";
             }).fail(function(error) {
               $("#login-link").prop('disabled', false);
-              alert(error.responseJSON.message);
+              toastr.error(error.responseJSON.message);
             });
           }
 
@@ -228,7 +227,7 @@
               "mail" : $("#forgot-email").val()
             }
             $("#forgot-link").prop('disabled', true);
-            $.post( "http://localhost/rentacarsystem/api/user/forgot", forgot_info ).done(function( data ) {
+            $.post( "http://localhost/rentacarsystem/api/user/forgot", jsonize_form("#forgot-form")).done(function( data ) {
               console.log(data);
               $("#forgot-form-container").addClass("hidden");
               $("#form-alert").removeClass("hidden");
@@ -247,7 +246,7 @@
               "password" : $("#change-password").val()
             }
             $("#change-link").prop('disabled', true);
-            $.post( "http://localhost/rentacarsystem/api/user/reset", forgot_info ).done(function( data ) {
+            $.post( "http://localhost/rentacarsystem/api/user/reset", jsonize_form("#change-form")).done(function( data ) {
               window.localStorage.setItem("token", data.token);
               window.location = "index.html";
             }).fail(function(error) {
@@ -255,7 +254,7 @@
               alert(error.responseJSON.message);
             });
           }
-          }
+
         </script>
 
     </body>
