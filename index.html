@@ -151,6 +151,9 @@
                                 <a href="#tables"><i class="fa fa-table fa-fw"></i> Tables</a>
                             </li>
                             <li>
+                                <a href="#company-cars"><i class="fa fa-table fa-fw"></i> Company Cars</a>
+                            </li>
+                            <li>
                                 <a href="#notifications"><i class="fa fa-table fa-fw"></i> Notifications</a>
                             </li>
                             <li>
@@ -244,7 +247,7 @@
               <section id="dashboard" data-load="dashboard.html" ></section>
               <section id="tables" data-load="tables.html" ></section>
               <section id="notifications" data-load="notifications.html" ></section>
-
+              <section id="company-cars" data-load="company-cars.html" ></section>
             </main>
 
         </div>
@@ -277,7 +280,7 @@
             app.route({view: 'dasboard', load: 'dasboard.html' });
             app.route({view: 'tables', load: 'tables.html' });
             app.route({view: 'notifications', load: 'notifications.html' });
-
+            app.route({view: 'company-cars', load: 'company-cars.html' });
             // run app
             app.run();
 
