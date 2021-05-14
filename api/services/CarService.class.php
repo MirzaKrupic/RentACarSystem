@@ -15,19 +15,38 @@ class CarService extends BaseService{
     return $this->dao->get_cars($owner_id, $offset, $limit, $search, $order);
   }
 
+  public function get_car_by_owner_and_id($owner_id, $id){
+    return $this->dao->get_car_by_owner_and_id($owner_id, $id);
+  }
+
   public function add($car){
     $car['created_at'] = date(Config::DATE_FORMAT);
     return parent::add($car);
   }
 
-  public function confirm($token){
-    $company = $this->dao->get_company_by_token($token);
+  public function add_cars($owner, $car){
+   try {
+     // TODO: VALIDATION LAYER OF FIELDS
 
-    if(!isset($company['id'])) throw Exception("Invalid token");
+     // whitelist fields
+     $data = [
+       "model" => $car["model"],
+       "brand_id" => $car["brand_id"],
+       "owner_id" => $owner["id"],
+       "created_at" => date(Config::DATE_FORMAT)
+     ];
+     return parent::add($data);
+   } catch (\Exception $e) {
+      throw new Exception($e->getMessage(), 400, $e);
+   }
+  }
 
-    $this->dao->update($company['id'], ["status" => "ACTIVE"]);
-
-    //send email
+  public function update_car($owner, $id, $car){
+    $db_template = $this->dao->get_by_id($id);
+    if ($db_template['owner_id'] != $owner['owner_id']){
+      throw new Exception("Invalid car template", 403);
+    }
+    return $this->update($id, $car);
   }
 
 }

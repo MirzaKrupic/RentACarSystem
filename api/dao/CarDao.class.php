@@ -21,5 +21,9 @@ class CarDao extends BaseDao{
     $query .= "LIMIT ${limit} OFFSET ${offset}";
     return $this->query($query, $params);
   }
+
+  public function get_car_by_owner_and_id($owner_id, $id){
+    return $this->query_unique("SELECT * FROM cars WHERE owner_id = :owner_id AND id = :id", ["owner_id" => $owner_id, "id" => $id]);
+  }
 }
 ?>
