@@ -105,19 +105,29 @@
   function getEmailTemplates(){
 
         $('#cars-table').DataTable( {
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
+            processing: true,
+            serverSide: true,
+            pagingType: "simple",
+            ajax: {
               url: "http://localhost/rentacarsystem/api/companies/cars",
               type: "GET",
-              beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
-              dataSrc: "",
+              beforeSend: function(xhr){
+                xhr.setRequestHeader('Authentication', localStorage.getItem("token"));
+              },
+              dataSrc: function(resp){
+                console.log(resp);
+                return resp;
+              },
               data: function ( d ) {
                 d.offset = d.start;
                 d.limit = d.length;
                 d.search = d.search.value;
                 d.order = encodeURIComponent((d.order[0].dir == 'asc' ? "-" : "+")+d.columns[d.order[0].column].data);
-
+                delete d.start;
+                delete d.length;
+                delete d.columns;
+                delete d.draw;
+                console.log(d);
               }
             },
             columns: [
