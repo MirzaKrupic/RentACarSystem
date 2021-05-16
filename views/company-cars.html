@@ -103,6 +103,34 @@
   }
 
   function getEmailTemplates(){
+
+        $('#cars-table').DataTable( {
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+              url: "http://localhost/rentacarsystem/api/companies/cars",
+              type: "GET",
+              beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+              dataSrc: "",
+              data: function ( d ) {
+                d.offset = d.start;
+                d.limit = d.length;
+                d.search = d.search.value;
+                d.order = encodeURIComponent((d.order[0].dir == 'asc' ? "-" : "+")+d.columns[d.order[0].column].data);
+
+              }
+            },
+            columns: [
+              { "data": "id" },
+              { "data": "model" },
+              { "data": "brand_id" },
+              { "data": "owner_id" },
+              { "data": "created_at" }
+            ]
+        } );
+
+
+/*
     $.ajax({
          url: "http://localhost/rentacarsystem/api/companies/cars?order="+encodeURIComponent("+id"),
          type: "GET",
@@ -123,6 +151,6 @@
            $("#cars-table tbody").html(html);
            $("#cars-table").DataTable();
          }
-      });
+      }); */
   }
 </script>
