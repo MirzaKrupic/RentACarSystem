@@ -53,4 +53,23 @@ Flight::route('POST /companies/cars/add', function(){
   Flight::json(Flight::carservice()->add_cars(Flight::get('company'), Flight::request()->data->getData()));
 });
 
+/**
+ * @OA\Put(path="/companies/cars/{id}", tags={"companies", "cars"}, security={{"ApiKeyAuth": {}}},
+ *   @OA\Parameter(type="integer", in="path", name="id", default=1),
+ *   @OA\RequestBody(description="Basic emiail template info that is going to be updated", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+ *    				 @OA\Property(property="model", required="true", type="string", example="audi",	description="Model of the car" ),
+ *    				 @OA\Property(property="brand_id", required="true", type="integer", example="subject",	description="10" ),
+ *          )
+ *       )
+ *     ),
+ *     @OA\Response(response="200", description="Update email template")
+ * )
+ */
+Flight::route('PUT /companies/cars/@id', function($id){
+  Flight::json(Flight::carservice()->update_car(Flight::get('company'), intval($id), Flight::request()->data->getData()));
+});
+
+
 ?>

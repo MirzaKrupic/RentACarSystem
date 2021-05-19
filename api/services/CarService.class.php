@@ -43,7 +43,7 @@ class CarService extends BaseService{
 
   public function update_car($owner, $id, $car){
     $db_template = $this->dao->get_by_id($id);
-    if ($db_template['owner_id'] != $owner['owner_id']){
+    if ($db_template['owner_id'] != $owner['id']){
       throw new Exception("Invalid car template", 403);
     }
     return $this->update($id, $car);

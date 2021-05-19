@@ -45,6 +45,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
           <form id="add-car" role="form">
+            <input type="hidden" name="id" />
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">Add car</h4>
@@ -76,12 +77,18 @@
   $("#add-car").validate({
     submitHandler: function(form, event) {
       event.preventDefault();
-      console.log(jsonize_form($(form)));
-      addCar(jsonize_form($(form)));
+      var data = jsonize_form($(form));
+
+      console.log(data);
+      if (data.id){
+        updateCar(data);
+      }else{
+        addCar(data);
+      }
     }
   });
 
-  getEmailTemplates();
+  getCars();
 
   function addCar(car){
     $.ajax({
@@ -91,7 +98,7 @@
          beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
          success: function(data) {
           toastr.success("Car is successfully added");
-          getEmailTemplates()
+          getCars()
           $("#add-car").trigger("reset");
           $("#add-car-modal").modal("hide");
           console.log(data);
@@ -102,11 +109,12 @@
       });
   }
 
-  function getEmailTemplates(){
+  function getCars(){
 
         $('#cars-table').DataTable( {
             processing: true,
             serverSide: true,
+            bDestroy: true,
             pagingType: "simple",
             ajax: {
               url: "http://localhost/rentacarsystem/api/companies/cars",
@@ -131,7 +139,11 @@
               }
             },
             columns: [
-              { "data": "id" },
+              { "data": "id",
+                "render": function ( data, type, row, meta ) {
+                  return '<span class="badge">'+data+'</span><a class="pull-right" style="font-size: 15px; cursor: pointer;" onclick="openEditCarTemplateModal('+data+')"><i class="fa fa-edit"></i></a>';
+                }
+              },
               { "data": "model" },
               { "data": "brand_id" },
               { "data": "owner_id" },
@@ -162,5 +174,47 @@
            $("#cars-table").DataTable();
          }
       }); */
+
   }
+
+  function openEditCarTemplateModal(id){
+    $.ajax({
+      url: "http://localhost/rentacarsystem/api/companies/cars/"+id,
+      type: "GET",
+      beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+      success: function(data) {
+        $("#add-car *[name='id']").val(data.id);
+        $("#add-car *[name='model']").val(data.model);
+        $("#add-car *[name='brand_id']").val(data.brand_id);
+        $("#add-car-modal").modal("show");
+        console.log(data);
+      },
+        error: function(jqXHR, textStatus, errorThrown ){
+        console.log(jqXHR);
+      }
+  });
+}
+
+function updateCar(car){
+  console.log(car);
+  $.ajax({
+       url: "http://localhost/rentacarsystem/api/companies/cars/"+car.id,
+       type: "PUT",
+       data: JSON.stringify(car),
+       contentType: "application/json",
+       beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+       success: function(data) {
+         toastr.success("Car has been updated");
+         getCars();
+         $("#add-car").trigger("reset");
+         $("#add-car *[name='id']").val("");
+         $('#add-car-modal').modal("hide");
+         console.log(data);
+       },
+       error: function(jqXHR, textStatus, errorThrown ){
+         toastr.error(jqXHR);
+         console.log(jqXHR);
+       }
+    });
+}
 </script>
