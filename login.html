@@ -166,6 +166,10 @@
              $("#change-password-token").val(urlParams.get('token'));
              showChangePasswordForm();
            }
+           if(sessionStorage.getItem("showmsg")=='1'){
+              toastr.success("Registred successfully");
+              sessionStorage.removeItem("showmsg");
+            }
         });
 
         function showChangePasswordForm(){
@@ -197,6 +201,7 @@
             console.log(data);
             $("#register-form-container").addClass("hidden");
             window.location = "login.html";
+            sessionStorage.setItem("showmsg", "1");
           }).fail(function(error) {
             $("#register-link").prop('disabled', false);
             console.log(error);
