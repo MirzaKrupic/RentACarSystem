@@ -92,7 +92,7 @@
 
   function addCar(car){
     $.ajax({
-         url: "http://localhost/rentacarsystem/api/companies/cars/add",
+         url: "api/companies/cars/add",
          type: "POST",
          data: car,
          beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
@@ -117,7 +117,7 @@
             bDestroy: true,
             pagingType: "simple",
             ajax: {
-              url: "http://localhost/rentacarsystem/api/companies/cars",
+              url: "api/companies/cars",
               type: "GET",
               beforeSend: function(xhr){
                 xhr.setRequestHeader('Authentication', localStorage.getItem("token"));
@@ -179,7 +179,7 @@
 
   function openEditCarTemplateModal(id){
     $.ajax({
-      url: "http://localhost/rentacarsystem/api/companies/cars/"+id,
+      url: "api/companies/cars/"+id,
       type: "GET",
       beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
       success: function(data) {
@@ -198,7 +198,7 @@
 function updateCar(car){
   console.log(car);
   $.ajax({
-       url: "http://localhost/rentacarsystem/api/companies/cars/"+car.id,
+       url: "api/companies/cars/"+car.id,
        type: "PUT",
        data: JSON.stringify(car),
        contentType: "application/json",

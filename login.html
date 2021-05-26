@@ -197,7 +197,7 @@
 
         function doRegister(){
           $("#register-link").prop('disabled', true);
-          $.post( "http://localhost/rentacarsystem/api/companies/register", jsonize_form("#register-form")).done(function( data ) {
+          $.post( "api/companies/register", jsonize_form("#register-form")).done(function( data ) {
             console.log(data);
             $("#register-form-container").addClass("hidden");
             window.location = "login.html";
@@ -211,7 +211,7 @@
 
           function doLogin(){
             $("#login-link").prop('disabled', true);
-            $.post( "http://localhost/rentacarsystem/api/companies/login", jsonize_form("#login-form")).done(function( data ) {
+            $.post( "api/companies/login", jsonize_form("#login-form")).done(function( data ) {
               window.localStorage.setItem("token", data.token);
               window.location = "index.html";
             }).fail(function(error) {
@@ -222,7 +222,7 @@
 
           function doForgotPassword(){
             $("#forgot-link").prop('disabled', true);
-            $.post( "http://localhost/rentacarsystem/api/companies/forgot", jsonize_form("#forgot-form")).done(function( data ) {
+            $.post( "api/companies/forgot", jsonize_form("#forgot-form")).done(function( data ) {
               console.log(data);
               $("#forgot-form-container").addClass("hidden");
               $("#form-alert").removeClass("hidden");
@@ -237,7 +237,7 @@
 
           function doChangePassword(){
             $("#change-link").prop('disabled', true);
-            $.post( "http://localhost/rentacarsystem/api/companies/reset", jsonize_form("#change-form")).done(function( data ) {
+            $.post( "api/companies/reset", jsonize_form("#change-form")).done(function( data ) {
               window.localStorage.setItem("token", data.token);
               window.location = "index.html";
             }).fail(function(error) {

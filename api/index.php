@@ -8,10 +8,10 @@ require_once dirname(__FILE__).'/services/CompanyService.class.php';
 
 use \Firebase\JWT\JWT;
 
-/* Error handling for API
+//Error handling for API
 Flight::map('error', function(Exception $ex){
   Flight::json(["message" => $ex->getMessage()], $ex->getCode());
-});*/
+});
 
 Flight::map('query', function($name, $default_value = NULL){
     $request = Flight::request();
