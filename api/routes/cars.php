@@ -16,6 +16,9 @@ Flight::route('GET /companies/cars', function(){
   $search = Flight::query('search');
   $order = Flight::query('order', '-id');
 
+  $total = Flight::carservice()->get_cars($account_id, $offset, $limit, $search, $order, TRUE);
+  header('total-records: ' . $total['total']);
+
   Flight::json(Flight::carservice()->get_cars($account_id, $offset, $limit, $search, $order));
 });
 

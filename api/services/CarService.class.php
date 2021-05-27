@@ -11,8 +11,8 @@ class CarService extends BaseService{
     $this->dao = new CarDao();
   }
 
-  public function get_cars($owner_id,$offset, $limit, $search, $order){
-    return $this->dao->get_cars($owner_id, $offset, $limit, $search, $order);
+  public function get_cars($owner_id,$offset, $limit, $search, $order, $total = FALSE){
+    return $this->dao->get_cars($owner_id, $offset, $limit, $search, $order, $total);
   }
 
   public function get_car_by_owner_and_id($owner_id, $id){
