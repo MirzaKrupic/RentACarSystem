@@ -301,6 +301,8 @@
               window.location = "login.html";
             }else{
               $('body').show();
+              var user_info = parse_jwt(window.localStorage.getItem("token"));
+              console.log(user_info);
             }
           });
 

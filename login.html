@@ -47,6 +47,18 @@
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Password" name="password" type="password" value="">
                                     </div>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="userType" value="company" id="companyRadio" checked>
+                                    <label class="form-check-label" for="companyRadio">
+                                      Company
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="userType" value="user" id="userRadio">
+                                    <label class="form-check-label" for="userRadio">
+                                      User
+                                    </label>
+                                  </div>
                                     <!-- Change this to a button or input when using this as a form -->
                                     <button id="login-link" onclick="doLogin();" class="btn btn-lg btn-success btn-block">Login</button>
                                     <div class="form-group pull-right">
@@ -211,6 +223,8 @@
 
           function doLogin(){
             $("#login-link").prop('disabled', true);
+            var radioValue = $("input[name='userType']:checked").val();
+            if(radioValue == 'company'){
             $.post( "api/companies/login", jsonize_form("#login-form")).done(function( data ) {
               window.localStorage.setItem("token", data.token);
               window.location = "index.html";
@@ -218,6 +232,9 @@
               $("#login-link").prop('disabled', false);
               toastr.error(error.responseJSON.message);
             });
+          }else{
+            console.log(radioValue);
+            }
           }
 
           function doForgotPassword(){
