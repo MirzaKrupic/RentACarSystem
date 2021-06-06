@@ -205,9 +205,7 @@
       type: "GET",
       beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
       success: function(data) {
-        $("#add-car *[name='id']").val(data.id);
-        $("#add-car *[name='model']").val(data.model);
-        $("#add-car *[name='brand_id']").val(data.brand_id);
+        json2form("#add-car", data);
         $("#add-car-modal").modal("show");
         console.log(data);
       },

@@ -9,6 +9,12 @@ function jsonize_form(selector){
   return form_data;
 }
 
+function json2form(selector, data){
+  for (attr in data) {
+    $(selector+" *[name='id']").val(data[attr]);
+  }
+}
+
 /*
 https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library
 */
