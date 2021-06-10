@@ -205,6 +205,7 @@
         <script src="./assets/js/startmin.js"></script>
         <script src="./assets/js/utils.js"></script>
         <script src="./assets/js/restClient.js"></script>
+        <script src="./assets/js/controllers/cars.js"></script>
         <script src="./assets/js/dataTables/jquery.dataTables.min.js"></script>
         <script src="./assets/js/dataTables/dataTables.bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -218,7 +219,7 @@
             app.route({view: 'dasboard', load: 'dasboard.html' });
             app.route({view: 'tables', load: 'tables.html' });
             app.route({view: 'notifications', load: 'notifications.html' });
-            app.route({view: 'company-cars', load: 'company-cars.html' });
+            app.route({view: 'company-cars', load: 'company-cars.html', onReady: function() {Car.init()} });
             // run app
             app.run();
 
