@@ -91,22 +91,12 @@
   getCars();
 
   function addCar(car){
-    $.ajax({
-         url: "api/companies/cars/add",
-         type: "POST",
-         data: car,
-         beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
-         success: function(data) {
-          toastr.success("Car is successfully added");
-          getCars()
-          $("#add-car").trigger("reset");
-          $("#add-car-modal").modal("hide");
-          console.log(data);
-        },
-         error: function(jqXHR, textStatus, errorThrown){
-          console.log(jqXHR);
-         }
-      });
+    RestClient.post("api/companies/cars/add", car, function(data){
+      toastr.success("Car is successfully added");
+      getCars()
+      $("#add-car").trigger("reset");
+      $("#add-car-modal").modal("hide");
+    });
   }
 
   function getCars(){
@@ -200,41 +190,19 @@
   }
 
   function openEditCarTemplateModal(id){
-    $.ajax({
-      url: "api/companies/cars/"+id,
-      type: "GET",
-      beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
-      success: function(data) {
-        AUtils.json2form("#add-car", data);
-        $("#add-car-modal").modal("show");
-        console.log(data);
-      },
-        error: function(jqXHR, textStatus, errorThrown ){
-        console.log(jqXHR);
-      }
-  });
+    RestClient.get("api/companies/cars/"+id, function(data){
+      AUtils.json2form("#add-car", data);
+      $("#add-car-modal").modal("show");
+    });
 }
 
 function updateCar(car){
-  console.log(car);
-  $.ajax({
-       url: "api/companies/cars/"+car.id,
-       type: "PUT",
-       data: JSON.stringify(car),
-       contentType: "application/json",
-       beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
-       success: function(data) {
-         toastr.success("Car has been updated");
-         getCars();
-         $("#add-car").trigger("reset");
-         $("#add-car *[name='id']").val("");
-         $('#add-car-modal').modal("hide");
-         console.log(data);
-       },
-       error: function(jqXHR, textStatus, errorThrown ){
-         toastr.error(jqXHR);
-         console.log(jqXHR);
-       }
-    });
+  RestClient.put("api/companies/cars/"+car.id, car, function(data){
+    toastr.success("Car has been updated");
+    getCars();
+    $("#add-car").trigger("reset");
+    $("#add-car *[name='id']").val("");
+    $('#add-car-modal').modal("hide");
+  });
 }
 </script>
