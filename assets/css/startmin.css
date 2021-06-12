@@ -661,3 +661,27 @@ table.dataTable thead .sorting:after {
     color: #fff; /* active text color */
     background-color: #a94442; /* active bg color */
 }
+
+#page-wrapper.mainwrapper{
+  margin: 0;
+}
+
+.fit-image{
+width: 100%;
+object-fit: cover;
+}
+
+.caritem{
+  border-style: groove;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 2%;
+}
+
+.picturecol{
+  padding: 0px;
+}
+
+.rentbtn{
+  margin-top: 18%;
+}
