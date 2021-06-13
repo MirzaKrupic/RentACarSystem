@@ -61,7 +61,11 @@ class Car{
           { "data": "model" },
           { "data": "brand_id" },
           { "data": "owner_id" },
-          { "data": "created_at" }
+          { "data": "created_at" },
+          { "data": "number_of_doors" },
+          { "data": "number_of_gears" },
+          { "data": "number_of_seats" },
+          { "data": "licence_plate" }
         ]
     } );
   }

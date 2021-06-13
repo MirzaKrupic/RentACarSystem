@@ -23,6 +23,22 @@ Flight::route('GET /companies/cars', function(){
 });
 
 /**
+ * @OA\Get(path="/cars/all", tags={"cars"},
+ *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
+ *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
+ *     @OA\Parameter(type="string", in="query", name="order", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name descending order by column_name"),
+ *     @OA\Response(response="200", description="List email templates for user")
+ * )
+ */
+Flight::route('GET /cars/all', function(){
+  $offset = Flight::query('offset', 0);
+  $limit = Flight::query('limit', 25);
+  $order = Flight::query('order', '-id');
+
+  Flight::json(Flight::carservice()->get_all_cars($offset, $limit, $order));
+});
+
+/**
  * @OA\Get(path="/companies/cars/{id}", tags={"companies", "cars"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(type="integer", in="path", name="id", default=9, description="Id of email template"),
  *     @OA\Response(response="200", description="Fetch individual email template")
