@@ -44,7 +44,11 @@ Flight::route('GET /companies/cars/@id', function($id){
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
  *    				 @OA\Property(property="model", required="true", type="string", example="gold",	description="Company's email address" ),
- *             @OA\Property(property="brand_id", required="true", type="string", example="1",	description="Password" )
+ *             @OA\Property(property="brand_id", required="true", type="string", example="1",	description="Password" ),
+ *    				 @OA\Property(property="number_of_seats", required="true", type="integer", example="4",	description="Model of the car" ),
+ *    				 @OA\Property(property="number_of_gears", required="true", type="integer", example="4",	description="10" ),
+ *    				 @OA\Property(property="number_of_doors", required="true", type="integer", example="4",	description="10" ),
+ *    				 @OA\Property(property="licence_plate", required="true", type="string", example="xxx-xxx-xxx",	description="Model of the car" )
  *          )
  *       )
  *     ),
