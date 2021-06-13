@@ -54,8 +54,11 @@ class Login{
 
     static login(){
       $("#login-link").prop('disabled', true);
-      RestClient.post("api/companies/login", AUtils.form2json("#login-form"), function(data){
-        var radioValue = $("input[name='userType']:checked").val();
+      var radioValue = $("input[name='userType']:checked").val();
+      var type = "NONE";
+      if(radioValue == "company") type = "api/companies/login";
+      else if(radioValue == "user") type = "api/user/login";
+      RestClient.post(type, AUtils.form2json("#login-form"), function(data){
         window.localStorage.setItem("token", data.token);
         window.location = "index.html";
       }, function(jqXHR, textStatus, errorThrown){
