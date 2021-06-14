@@ -5,6 +5,7 @@ require_once dirname(__FILE__).'/../vendor/autoload.php';
 require_once dirname(__FILE__).'/services/UserService.class.php';
 require_once dirname(__FILE__).'/services/CarService.class.php';
 require_once dirname(__FILE__).'/services/CompanyService.class.php';
+require_once dirname(__FILE__).'/services/BrandService.class.php';
 
 use \Firebase\JWT\JWT;
 
@@ -41,12 +42,14 @@ Flight::route('GET /', function(){
 Flight::register('userservice', 'UserService');
 Flight::register('carservice', 'CarService');
 Flight::register('companyservice', 'CompanyService');
+Flight::register('brandservice', 'BrandService');
 
 
 require_once dirname(__FILE__).'/routes/middleware.php';
 require_once dirname(__FILE__).'/routes/users.php';
 require_once dirname(__FILE__).'/routes/cars.php';
 require_once dirname(__FILE__).'/routes/companies.php';
+require_once dirname(__FILE__).'/routes/brands.php';
 
 
 Flight::start();
