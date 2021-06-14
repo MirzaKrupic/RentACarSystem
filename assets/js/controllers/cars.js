@@ -5,7 +5,7 @@ class Car{
       submitHandler: function(form, event) {
         event.preventDefault();
         var data = AUtils.form2json($(form));
-
+        data["brand_id"] = $("#brandsdropdown").val();
         console.log(data);
         if (data.id){
           Car.update(data);
@@ -92,6 +92,7 @@ class Car{
   static pre_edit(id){
   RestClient.get("api/companies/cars/"+id, function(data){
     AUtils.json2form("#add-car", data);
+    $("#brandsdropdown").val(data.brand_id);
     $("#add-car-modal").modal("show");
   });
 }
