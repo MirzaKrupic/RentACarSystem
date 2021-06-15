@@ -168,7 +168,7 @@
                   +'</div>'
                   +'</div>'
                   +'<div class="col-sm-3">'
-                  +'<button type="button" class="btn rentbtn btn-danger btn-lg btn-block align-bottom">Rent</button>'
+                  +'<button type="button" onclick="addRental('+data[i].id+')" class="btn rentbtn btn-danger btn-lg btn-block align-bottom">Rent</button>'
                   +'</div>'
                   +'</div>'
 
@@ -179,6 +179,15 @@
 
          }
       });
+  }
+
+  function addRental(car){
+    var carObj ='{ "car_id":"'+car+'" , "rented_on_date":"2021-06-15","return_date":"2021-06-15" }';
+    var obj = JSON.parse(carObj);
+    console.log(obj);
+    RestClient.post("api/users/rentings/add", obj, function(data){
+      toastr.success("You rented this car successfully");
+    });
   }
 
 </script>
