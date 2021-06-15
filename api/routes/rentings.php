@@ -5,7 +5,6 @@
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
  *             @OA\Property(property="car_id", required="true", type="string", example="1",	description="Password" ),
- *    				 @OA\Property(property="rented_on_date", required="false", type="date", example="xxxx-xx-xx",	description="Date of birth of the user" ),
  *    				 @OA\Property(property="return_date", required="false", type="date", example="xxxx-xx-xx",	description="Date of birth of the user" ),
  *          )
  *       )

@@ -168,7 +168,15 @@
                   +'</div>'
                   +'</div>'
                   +'<div class="col-sm-3">'
-                  +'<button type="button" onclick="addRental('+data[i].id+')" class="btn rentbtn btn-danger btn-lg btn-block align-bottom">Rent</button>'
+                  +'<div class="row">'
+                  +'<button type="button" onclick="addRental('+data[i].id+')" class="btn btn-danger btn-lg btn-block align-bottom">Rent</button>'
+                  +'</div>'
+                  +'<div class="row">'
+                  +'<label for="start">Start date:</label>'
+                  +'<input type="date" id="returnDate'+data[i].id+'" name="trip-start"'
+                  +'value="2021-07-21"'
+                  +'min="2021-07-21" max="2030-12-31">'
+                  +'</div>'
                   +'</div>'
                   +'</div>'
 
@@ -182,9 +190,10 @@
   }
 
   function addRental(car){
-    var carObj ='{ "car_id":"'+car+'" , "rented_on_date":"2021-06-15","return_date":"2021-06-15" }';
+    var date = document.getElementById("returnDate"+car).value;
+    var carObj ='{ "car_id":"'+car+'" , "return_date":"'+date+'" }';
     var obj = JSON.parse(carObj);
-    console.log(obj);
+    console.log(date);
     RestClient.post("api/users/rentings/add", obj, function(data){
       toastr.success("You rented this car successfully");
     });
