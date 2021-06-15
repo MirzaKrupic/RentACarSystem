@@ -6,13 +6,14 @@ require_once dirname(__FILE__).'/services/UserService.class.php';
 require_once dirname(__FILE__).'/services/CarService.class.php';
 require_once dirname(__FILE__).'/services/CompanyService.class.php';
 require_once dirname(__FILE__).'/services/BrandService.class.php';
+require_once dirname(__FILE__).'/services/RentingService.class.php';
 
 use \Firebase\JWT\JWT;
 
-//Error handling for API
+/*/Error handling for API
 Flight::map('error', function(Exception $ex){
   Flight::json(["message" => $ex->getMessage()], $ex->getCode());
-});
+}); */
 
 Flight::map('query', function($name, $default_value = NULL){
     $request = Flight::request();
@@ -43,6 +44,7 @@ Flight::register('userservice', 'UserService');
 Flight::register('carservice', 'CarService');
 Flight::register('companyservice', 'CompanyService');
 Flight::register('brandservice', 'BrandService');
+Flight::register('rentingservice', 'RentingService');
 
 
 require_once dirname(__FILE__).'/routes/middleware.php';
@@ -50,6 +52,7 @@ require_once dirname(__FILE__).'/routes/users.php';
 require_once dirname(__FILE__).'/routes/cars.php';
 require_once dirname(__FILE__).'/routes/companies.php';
 require_once dirname(__FILE__).'/routes/brands.php';
+require_once dirname(__FILE__).'/routes/rentings.php';
 
 
 Flight::start();
