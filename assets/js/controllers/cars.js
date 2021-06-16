@@ -65,7 +65,8 @@ class Car{
           { "data": "number_of_doors" },
           { "data": "number_of_gears" },
           { "data": "number_of_seats" },
-          { "data": "licence_plate" }
+          { "data": "licence_plate" },
+          { "data": "status" }
         ]
     } );
   }
