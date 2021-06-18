@@ -109,7 +109,7 @@
                   </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button onclick="save_user()" type="submit" class="btn btn-primary">Save changes</button>
             </div>
             </form>
         </div>
@@ -150,6 +150,11 @@
          document.getElementById("user-mail").innerHTML = data.mail;
          document.getElementById("user-phone").innerHTML = data.phone;
          document.getElementById("user-address").innerHTML = data.address;
+
+         if(sessionStorage.getItem("showmsg")=='1'){
+            toastr.success("User updated successfully");
+            sessionStorage.removeItem("showmsg");
+          }
        },
        error: function(jqXHR, textStatus, errorThrown ){
          if (error){
@@ -165,6 +170,15 @@
   RestClient.get("api/users/profile/", function(data){
     AUtils.json2form("#edit-user", data);
     $("#edit-user-modal").modal("show");
+  });
+}
+
+function save_user(){
+  var user = AUtils.form2json("#edit-user");
+  RestClient.put("api/users/update/", user, function(data){
+    toastr.success("User has been updated");
+    sessionStorage.setItem("showmsg", "1");
+    $("#edit-user-modal").modal("hide");
   });
 }
 

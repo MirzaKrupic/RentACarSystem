@@ -147,8 +147,7 @@ Flight::route('GET /user/confirm/@token', function($token){
 /**
 
  * @OA\Put(
- *     path="/admin/users/{id}",tags={"admin","user"}, security={{"ApiKeyAuth": {}}},
- * @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1),
+ *     path="/users/update",tags={"admin","user"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -160,14 +159,13 @@ Flight::route('GET /user/confirm/@token', function($token){
  * )
  */
 
-Flight::route('PUT /admin/users/@id', function($id){
+Flight::route('PUT /users/update', function(){
   $data = Flight::request()->data->getData();
-  Flight::json(Flight::userservice()->update($id, $data));
+  Flight::json(Flight::userservice()->update(Flight::get('user')['id'], $data));
 });
 
 
 /**
-
  * @OA\Put(
  *     path="/users/{id}",tags={"user"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
