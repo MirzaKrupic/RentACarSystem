@@ -109,7 +109,43 @@
                       <i class="fa fa-car fa-fw"></i> Cars for rent
                   </div>
                   <div id="carcardssection" class="panel-body">
-
+                    <div class="card mb-3">
+                      <div class="row no-gutters">
+                        <div class="col-md-4">
+                          <img src="./assets/imgs/ibiza.jpg" class="card-img fit-image">
+                        </div>
+                        <div class="col-md-4">
+                          <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <div class="row">
+                              <div class="col-sm-1"><img src="./assets/imgs/cardoor.png" alt="number of doors" class="miniimg"></div>
+                              <div class="col-sm-10">col-sm-10</div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-sm-1"><img src="./assets/imgs/carshifter.png" alt="number of gears" class="miniimg"></div>
+                              <div class="col-sm-10">col-sm-10</div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-sm-1"><img src="./assets/imgs/carseat.png" alt="number of seats" class="miniimg"></div>
+                              <div class="col-sm-10">col-sm-10</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="card-body">
+                            <label for="start">Start date:</label>
+                             <input type="date" id="returnDate'+data[i].id+'" name="trip-start"
+                             value="2021-07-21"
+                             min="2021-07-21" max="2030-12-31">
+                             <br>
+                             <br>
+                            <button type="button" class="btn btn-danger btn-lg btn-block align-bottom" disabled>Rented out</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -134,48 +170,9 @@
          success: function(data) {
            console.log(data);
            var html = "";
+           var cnt = 0;
            for(var i = 0; i < data.length; i++){
-             html+='<div class="card mb-3">'
-                  +'<div class="row no-gutters">'
-                  +'<div class="col-md-4">'
-                  +'<img src="./assets/imgs/ibiza.jpg" class="card-img fit-image">'
-                  +'</div>'
-                  +'<div class="col-md-4">'
-                  +'<div class="card-body">'
-                  +'<h5 class="card-title">'+data[i].model+'</h5>'
-                  +'<div class="row">'
-                  +'<div class="col-sm-1"><img src="./assets/imgs/cardoor.png" alt="number of doors" class="miniimg"></div>'
-                  +'<div class="col-sm-10">'+data[i].number_of_doors+'</div>'
-                  +'</div>'
-                  +'<br>'
-                  +'<div class="row">'
-                  +'<div class="col-sm-1"><img src="./assets/imgs/carshifter.png" alt="number of gears" class="miniimg"></div>'
-                  +'<div class="col-sm-10">'+data[i].number_of_gears+'</div>'
-                  +'</div>'
-                  +'<br>'
-                  +'<div class="row">'
-                  +'<div class="col-sm-1"><img src="./assets/imgs/carseat.png" alt="number of seats" class="miniimg"></div>'
-                  +'<div class="col-sm-10">'+data[i].number_of_seats+'</div>'
-                  +'</div>'
-                  +'</div>'
-                  +'</div>'
-                  +'<div class="col-md-4">'
-                  +'<div class="card-body">'
-                  +'<label for="start">Start date:</label>'
-                  +'<input type="date" id="returnDate'+data[i].id+'" name="trip-start"'
-                  +'value="2021-07-21"'
-                  +'min="2021-07-21" max="2030-12-31">'
-                  +'<br>'
-                  +'<br>'
-                  if(data[i].status == "FOR RENT"){
-                    html +='<button type="button" onclick="addRental('+data[i].id+')" class="btn btn-danger btn-lg btn-block align-bottom">Rent</button>'
-                  }else{
-                  html+='<button type="button" class="btn btn-danger btn-lg btn-block align-bottom" disabled>Rented out</button>'
-                  }
-                  html+='</div>'
-                  +'</div>'
-                  +'</div>'
-                  +'</div>'
+
            }
 
            document.getElementById("carcardssection").innerHTML += html;
@@ -196,8 +193,6 @@
 
     RestClient.put("api/user/rent/"+car, null, function(data){
     });
-    document.getElementById("carcardssection").innerHTML = "";
-    getAllCars();
   }
 
 </script>

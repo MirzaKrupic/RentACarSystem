@@ -154,6 +154,7 @@
               <section id="tables" data-load="tables.html" ></section>
               <section id="notifications" data-load="notifications.html" ></section>
               <section id="company-cars" data-load="company-cars.html" ></section>
+              <section id="test" data-load="maintest.html" ></section>
             </main>
 
         </div>
@@ -195,6 +196,7 @@
             app.route({view: 'profile', load: 'profile.html' });
             app.route({view: 'dasboard', load: 'dasboard.html' });
             app.route({view: 'tables', load: 'tables.html' });
+            app.route({view: 'test', load: 'maintest.html' });
             app.route({view: 'notifications', load: 'notifications.html' });
             app.route({view: 'company-cars', load: 'company-cars.html', onReady: function() {Car.init()} });
             // run app

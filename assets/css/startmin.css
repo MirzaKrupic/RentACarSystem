@@ -667,8 +667,8 @@ table.dataTable thead .sorting:after {
 }
 
 .fit-image{
-width: 100%;
-object-fit: cover;
+  width:100%;
+  height:100%;
 }
 
 .caritem{
@@ -739,4 +739,11 @@ object-fit: cover;
     color: #1a202c;
     text-align: left;
     background-color: #e2e8f0;
+}
+
+.miniimg{
+  height: 24px;
+  margin-right: -16px;
+  margin-bottom: -6px;
+  vertical-align:text-bottom; /* align the text */
 }
