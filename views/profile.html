@@ -56,7 +56,7 @@
                       <hr>
                       <div class="row">
                         <div class="col-sm-12">
-                          <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                          <a onclick="user_pre_edit()" class="btn btn-info ">Edit</a>
                         </div>
                       </div>
                     </div>
@@ -80,41 +80,32 @@
 <!-- /#page-wrapper -->
 
 <!-- Modal -->
-<div class="modal fade" id="add-car-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit-user-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form id="add-car" role="form">
+          <form id="edit-user" role="form">
             <input type="hidden" name="id" />
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Add car</h4>
+                <h4 class="modal-title" id="myModalLabel">Edit your profile</h4>
             </div>
             <div class="modal-body">
 
                   <div class="form-group">
-                      <label>Model:</label>
-                      <input type="text" name="model" class="form-control" placeholder="model of your car" required>
+                      <label>Name:</label>
+                      <input type="text" name="name" class="form-control" placeholder="Your name" required>
                   </div>
                   <div class="form-group">
-                      <label>Brand</label>
-                      <select id="brandsdropdown" >
-                      </select>
+                      <label>E-mail</label>
+                      <input type="text" name="mail" class="form-control" placeholder="Your e-mail" required>
                   </div>
                   <div class="form-group">
-                      <label>Number of seats</label>
-                      <input type="text" name="number_of_seats" class="form-control" placeholder="Enter text" required>
+                      <label>Address</label>
+                      <input type="text" name="address" class="form-control" placeholder="Your address" required>
                   </div>
                   <div class="form-group">
-                      <label>Number of gears</label>
-                      <input type="text" name="number_of_gears" class="form-control" placeholder="Enter text" required>
-                  </div>
-                  <div class="form-group">
-                      <label>Number of doors</label>
-                      <input type="text" name="number_of_doors" class="form-control" placeholder="Enter text" required>
-                  </div>
-                  <div class="form-group">
-                      <label>Licence plate</label>
-                      <input type="text" name="licence_plate" class="form-control" placeholder="Enter text" required>
+                      <label>Phone</label>
+                      <input type="text" name="phone" class="form-control" placeholder="Your phone number" required>
                   </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -169,6 +160,13 @@
        }
    });
   }
+
+  function user_pre_edit(){
+  RestClient.get("api/users/profile/", function(data){
+    AUtils.json2form("#edit-user", data);
+    $("#edit-user-modal").modal("show");
+  });
+}
 
 
 </script>
