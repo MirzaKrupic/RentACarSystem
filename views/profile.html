@@ -1,0 +1,174 @@
+<div id="page-wrapper">
+    <div class="container-fluid profile-body">
+      <div class="main-body">
+              <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex flex-column align-items-center text-center">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                        <div class="mt-3">
+                          <h4 id="user-name">John Doe</h4>
+                          <p id="user-address" class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Full Name</h6>
+                        </div>
+                        <div id="user-name-det" class="col-sm-9 text-secondary">
+                          Kenneth Valdez
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div id="user-mail" class="col-sm-9 text-secondary">
+                          fip@jukmuh.al
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Phone</h6>
+                        </div>
+                        <div id="user-phone" class="col-sm-9 text-secondary">
+                          (239) 816-9029
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Address</h6>
+                        </div>
+                        <div id="user-address" class="col-sm-9 text-secondary">
+                          Bay Area, San Francisco, CA
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row gutters-sm">
+                <div class="col-sm-12 mb-12">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <small>Rent history</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+<!-- Modal -->
+<div class="modal fade" id="add-car-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form id="add-car" role="form">
+            <input type="hidden" name="id" />
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Add car</h4>
+            </div>
+            <div class="modal-body">
+
+                  <div class="form-group">
+                      <label>Model:</label>
+                      <input type="text" name="model" class="form-control" placeholder="model of your car" required>
+                  </div>
+                  <div class="form-group">
+                      <label>Brand</label>
+                      <select id="brandsdropdown" >
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Number of seats</label>
+                      <input type="text" name="number_of_seats" class="form-control" placeholder="Enter text" required>
+                  </div>
+                  <div class="form-group">
+                      <label>Number of gears</label>
+                      <input type="text" name="number_of_gears" class="form-control" placeholder="Enter text" required>
+                  </div>
+                  <div class="form-group">
+                      <label>Number of doors</label>
+                      <input type="text" name="number_of_doors" class="form-control" placeholder="Enter text" required>
+                  </div>
+                  <div class="form-group">
+                      <label>Licence plate</label>
+                      <input type="text" name="licence_plate" class="form-control" placeholder="Enter text" required>
+                  </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script type="text/javascript">
+  getProfile();
+
+  function getProfile(){
+    $.ajax({
+       url: "api/users/profile/",
+       type: 'GET',
+       beforeSend: function(xhr){
+         if (localStorage.getItem("token")){ // optional header token due login and other endpoints
+           xhr.setRequestHeader('Authentication', localStorage.getItem("token"));
+         }
+       },
+       async: false,
+       cache: false,
+       timeout: 30000,
+       fail: function(){
+           return true;
+       },
+       done: function(msg){
+           if (parseFloat(msg)){
+               return false;
+           } else {
+               return true;
+           }
+       },
+       success: function(data) {
+         document.getElementById("user-name").innerHTML = data.name;
+         document.getElementById("user-name-det").innerHTML = data.name;
+         document.getElementById("user-mail").innerHTML = data.mail;
+         document.getElementById("user-phone").innerHTML = data.phone;
+         document.getElementById("user-address").innerHTML = data.address;
+       },
+       error: function(jqXHR, textStatus, errorThrown ){
+         if (error){
+           error(jqXHR, textStatus, errorThrown);
+         }else{
+           toastr.error(jqXHR.responseJSON.message);
+         }
+       }
+   });
+  }
+
+
+</script>

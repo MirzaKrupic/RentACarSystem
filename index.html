@@ -137,7 +137,7 @@
                                 <a href="#dashboard" class="active"><i class="fa fa-bars fa-fw"></i> Main Menu</a>
                             </li>
                             <li>
-                                <a href="#tables"><i class="fa fa-table fa-fw"></i> User profile</a>
+                                <a href="#profile"><i class="fa fa-table fa-fw"></i> User profile</a>
                             </li>
                             <li class="admin-stuff">
                               <a href="admin.html"><i class="fa fa-users fa-fw"></i> Admin Panel</a>
@@ -149,6 +149,7 @@
 
             <main id="jqueryspapp" role="main">
               <section id="mainhome" data-load="main.html" ></section>
+              <section id="profile" data-load="profile.html" ></section>
               <section id="dashboard" data-load="dashboard.html" ></section>
               <section id="tables" data-load="tables.html" ></section>
               <section id="notifications" data-load="notifications.html" ></section>
@@ -191,6 +192,7 @@
 
             // define routes
             app.route({view: 'mainhome', load: 'main.html' });
+            app.route({view: 'profile', load: 'profile.html' });
             app.route({view: 'dasboard', load: 'dasboard.html' });
             app.route({view: 'tables', load: 'tables.html' });
             app.route({view: 'notifications', load: 'notifications.html' });

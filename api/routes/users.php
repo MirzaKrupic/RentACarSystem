@@ -7,7 +7,8 @@
  *   @OA\Server(
  *       url="http://localhost/rentacarsystem/api/",
  *       description="Development Enviroment"
- *   )
+ *   ),
+  *    @OA\Server(url="https://mirza.brzo.net/api/", description="Production Environment" )
  * ),
  * @OA\SecurityScheme(securityScheme="ApiKeyAuth", type="apiKey", in="header", name="Authentication" )
  */
@@ -185,6 +186,8 @@ Flight::route('PUT /users/@id', function($id){
   Flight::json(Flight::userservice()->update(Flight::get('user')['id'], $data));
 });
 
+
+
 /**
  * @OA\Post(path="/admin/users", tags={"admin", "user"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic account info", required=true,
@@ -203,6 +206,20 @@ Flight::route('PUT /users/@id', function($id){
 Flight::route('POST /admin/users', function(){
   $data = Flight::request()->data->getData();
   Flight::json(Flight::userservice()->add($data));
+});
+
+/**
+*
+ * @OA\Get(
+ *     path="/users/profile",tags={"user"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Parameter(),
+ *     @OA\Response(response="200", description="List users from database by ID")
+ * )
+ */
+
+Flight::route('GET /users/profile', function(){
+    Flight::json(Flight::userservice()->get_by_id(Flight::get('user')['id']));
+
 });
 
 ?>
