@@ -25,12 +25,12 @@ class RentingDao extends BaseDao{
     if ($total){
        $query = "SELECT COUNT(*) AS total ";
      }else{
-       $query = "SELECT r.*, c.model ";
+       $query = "SELECT r.*, c.model as model ";
      }
     $query .= "FROM rentings r, cars c
-               WHERE user_id = :user_id ";
+               WHERE user_id = :user_id AND r.car_id=c.id ";
     if(isset($search)){
-        $query .= "AND LOWER(c.model) LIKE CONCAT('%', :search, '%') ";
+        $query .= "AND LOWER(model) LIKE CONCAT('%', :search, '%') ";
         $params['search'] = strtolower($search);
     }
     if ($total){

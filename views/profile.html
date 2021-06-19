@@ -68,6 +68,20 @@
                   <div class="card h-100">
                     <div class="card-body">
                       <small>Rent history</small>
+                      <div class="table-responsive">
+                          <table id="history-table" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                              <thead>
+                                  <tr>
+                                      <th>Model</th>
+                                      <th>Rented on date</th>
+                                      <th>Return date</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                          </table>
+                      </div>
+                      <!-- /.table-responsive -->
                     </div>
                   </div>
                 </div>
@@ -121,6 +135,7 @@
 
 <script type="text/javascript">
   getProfile();
+  get_history();
 
   function getProfile(){
     $.ajax({
@@ -180,6 +195,48 @@ function save_user(){
     sessionStorage.setItem("showmsg", "1");
     $("#edit-user-modal").modal("hide");
   });
+}
+
+function get_history(){
+  $('#history-table').DataTable( {
+      processing: true,
+      serverSide: true,
+      bDestroy: true,
+      pagingType: "simple",
+      preDrawCallback: function( settings ) {
+        if ( settings.jqXHR){
+        settings._iRecordsTotal = settings.jqXHR.getResponseHeader('total-records');
+        settings._iRecordsDisplay = settings.jqXHR.getResponseHeader('total-records');
+        }
+    },
+      ajax: {
+        url: "api/users/rentings/all/",
+        type: "GET",
+        beforeSend: function(xhr){
+          xhr.setRequestHeader('Authentication', localStorage.getItem("token"));
+        },
+        dataSrc: function(resp){
+          console.log(resp);
+          return resp;
+        },
+        data: function ( d ) {
+          d.offset = d.start;
+          d.limit = d.length;
+          d.search = d.search.value;
+          d.order = encodeURIComponent((d.order[0].dir == 'asc' ? "-" : "+")+d.columns[d.order[0].column].data);
+          delete d.start;
+          delete d.length;
+          delete d.columns;
+          delete d.draw;
+          console.log(d);
+        }
+      },
+      columns: [
+        { "data": "model" },
+        { "data": "rented_on_date" },
+        { "data": "return_date" }
+      ]
+  } );
 }
 
 
