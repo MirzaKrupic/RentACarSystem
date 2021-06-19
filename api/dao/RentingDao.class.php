@@ -11,8 +11,36 @@ class RentingDao extends BaseDao{
     return $this->query("SELECT * FROM rentings WHERE rented_on_date = :rdate", ["rdate" => $date]);
   }
 
+  public function get_rent_by_user_id($user_id){
+    return $this->query("SELECT * FROM rentings WHERE user_id = :user_id", ["user_id" => $user_id]);
+  }
+
   public function get_rent_by_return_date($date){
     return $this->query("SELECT * FROM rentings WHERE return_date = :rdate", ["rdate" => $date]);
+  }
+
+  public function get_rentings($user_id, $offset, $limit, $search, $order, $total=FALSE){
+    list($order_column, $order_direction) = self::parse_order($order);
+    $params = ["user_id" => $user_id];
+    if ($total){
+       $query = "SELECT COUNT(*) AS total ";
+     }else{
+       $query = "SELECT r.*, c.model ";
+     }
+    $query .= "FROM rentings r, cars c
+               WHERE user_id = :user_id ";
+    if(isset($search)){
+        $query .= "AND LOWER(c.model) LIKE CONCAT('%', :search, '%') ";
+        $params['search'] = strtolower($search);
+    }
+    if ($total){
+       return $this->query_unique($query, $params);
+     }else{
+       $query .="ORDER BY ${order_column} ${order_direction} ";
+       $query .="LIMIT ${limit} OFFSET ${offset}";
+
+       return $this->query($query, $params);
+     }
   }
 }
 ?>

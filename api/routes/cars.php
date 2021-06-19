@@ -55,6 +55,22 @@ Flight::route('GET /companies/cars/@id', function($id){
 });
 
 /**
+ * @OA\Get(path="/cars/{id}", tags={"companies", "cars"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Parameter(type="integer", in="path", name="id", default=9, description="Id of email template"),
+ *     @OA\Response(response="200", description="Fetch individual email template")
+ * )
+ */
+Flight::route('GET /cars/@id', function($id){
+  /*$template = Flight::emailTemplateService()->get_by_id($id);
+  if ($template['account_id'] != Flight::get('user')['aid']){
+    Flight::json([]);
+  }else{
+    Flight::json($template);
+  }*/
+  Flight::json(Flight::carservice()->get_car_by_id($id));
+});
+
+/**
  * @OA\Post(path="/companies/cars/add", tags={"companies", "cars"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic company info", required=true,
  *       @OA\MediaType(mediaType="application/json",

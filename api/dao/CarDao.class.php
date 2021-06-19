@@ -34,5 +34,9 @@ class CarDao extends BaseDao{
   public function get_car_by_owner_and_id($owner_id, $id){
     return $this->query_unique("SELECT * FROM cars WHERE owner_id = :owner_id AND id = :id", ["owner_id" => $owner_id, "id" => $id]);
   }
+
+  public function get_car_by_id($id){
+    return $this->query_unique("SELECT * FROM cars WHERE id = :id", ["id" => $id]);
+  }
 }
 ?>

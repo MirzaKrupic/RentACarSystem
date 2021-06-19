@@ -15,6 +15,14 @@ class RentingService extends BaseService{
     return $this->dao->get_all($offset, $limit, $order);
   }
 
+  public function get_rent_by_user_id($id){
+    return $this->dao->get_rent_by_user_id($id);
+  }
+
+  public function get_rentings($user_id,$offset, $limit, $search, $order, $total = FALSE){
+    return $this->dao->get_rentings($user_id, $offset, $limit, $search, $order, $total);
+  }
+
   public function add_renting($user, $renting){
 
     $param = [
