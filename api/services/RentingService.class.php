@@ -27,7 +27,7 @@ class RentingService extends BaseService{
 
     $param = [
       "user_id" => $user,
-      "car_id"=> "33",
+      "car_id"=> $renting['car_id'],
       "rented_on_date"=> date(Config::DATE_FORMAT),
       "return_date"=> $renting['return_date']
     ];

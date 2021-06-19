@@ -185,6 +185,10 @@
       });
   }
 
+  function test(car){
+    console.log(car);
+  }
+
   function addRental(car){
     var date = document.getElementById("returnDate"+car).value;
     var carObj ='{ "car_id":"'+car+'" , "return_date":"'+date+'" }';
