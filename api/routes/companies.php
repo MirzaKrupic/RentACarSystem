@@ -99,4 +99,38 @@ Flight::route('GET /companies/confirm/@token', function($token){
   Flight::json(["message" => "Your account has been activated."]);
 });
 
+/**
+*
+ * @OA\Get(
+ *     path="/companies/profile",tags={"companies"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Parameter(),
+ *     @OA\Response(response="200", description="List users from database by ID")
+ * )
+ */
+
+Flight::route('GET /companies/profile', function(){
+    Flight::json(Flight::companyservice()->get_by_id(Flight::get('company')['id']));
+
+});
+
+/**
+
+ * @OA\Put(
+ *     path="/companies/update",tags={"companies"}, security={{"ApiKeyAuth": {}}},
+ *   @OA\RequestBody(description="Basic user info", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+ *    			@OA\Property(property="name", required="true", type="string", example="My Test Account",	description="Name of the account" ),
+ *    				 @OA\Property(property="status", type="string", example="ACTIVE",	description="Account status" ))
+ *       )
+ *     ),
+ *     @OA\Response(response="200", description="Update user in database")
+ * )
+ */
+
+Flight::route('PUT /companies/update', function(){
+  $data = Flight::request()->data->getData();
+  Flight::json(Flight::companyservice()->update(Flight::get('company')['id'], $data));
+});
+
 ?>

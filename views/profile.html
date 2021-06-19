@@ -63,7 +63,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row gutters-sm">
+              <div class="row gutters-sm user-stuff">
                 <div class="col-sm-12 mb-12">
                   <div class="card h-100">
                     <div class="card-body">
@@ -134,12 +134,29 @@
 <!-- /.modal -->
 
 <script type="text/javascript">
-  getProfile();
-  get_history();
+  $(document).ready(function() {
+      var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
+      if (user_info.r == "USER"){
+        getProfile();
+        get_history();
+      }
+      if (user_info.r == "company"){
+        $(".user-stuff").remove();
+        getProfile();
+      }
+      $('body').show();
+
+  });
 
   function getProfile(){
+    var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
+    if(user_info.r == "USER"){
+      var url = "api/users/profile/";
+    }else{
+      var url = "api/companies/profile/";
+    }
     $.ajax({
-       url: "api/users/profile/",
+       url: url,
        type: 'GET',
        beforeSend: function(xhr){
          if (localStorage.getItem("token")){ // optional header token due login and other endpoints
@@ -182,17 +199,29 @@
   }
 
   function user_pre_edit(){
-  RestClient.get("api/users/profile/", function(data){
+    var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
+    if(user_info.r == "USER"){
+      var url = "api/users/profile/";
+    }else{
+      var url = "api/companies/profile/";
+    }
+  RestClient.get(url, function(data){
     AUtils.json2form("#edit-user", data);
     $("#edit-user-modal").modal("show");
   });
 }
 
 function save_user(){
+  sessionStorage.setItem("showmsg", "1");
+  var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
   var user = AUtils.form2json("#edit-user");
-  RestClient.put("api/users/update/", user, function(data){
-    toastr.success("User has been updated");
-    sessionStorage.setItem("showmsg", "1");
+  if(user_info.r == "USER"){
+    var url = "api/users/update/";
+  }else{
+    var url = "api/companies/update/";
+  }
+  RestClient.put(url, user, function(data){
+    getProfile();
     $("#edit-user-modal").modal("hide");
   });
 }

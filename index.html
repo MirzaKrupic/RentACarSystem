@@ -106,7 +106,7 @@
                             <li>
                                 <a href="#tables"><i class="fa fa-table fa-fw"></i> Tables</a>
                             </li>
-                            <li>
+                            <li class="company-stuff">
                                 <a href="#company-cars"><i class="fa fa-table fa-fw"></i> Company Cars</a>
                             </li>
                             <li>
@@ -208,6 +208,12 @@
               var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
               if (user_info.r != "ADMIN"){
                 $(".admin-stuff").remove();
+              }
+              if (user_info.r != "USER"){
+                $(".user-stuff").remove();
+              }
+              if (user_info.r != "company"){
+                $(".company-stuff").remove();
               }
               $('body').show();
             }
