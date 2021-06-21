@@ -8,7 +8,6 @@
  *       url="http://localhost/rentacarsystem/api/",
  *       description="Development Enviroment"
  *   ),
- *    @OA\Server(url="https://mirza.brzo.net/api/", description="Production Environment" ),
  *    @OA\Server(url="https://rent-a-car-system-iinfw.ondigitalocean.app/api/", description="Production Environment" )
  * ),
  * @OA\SecurityScheme(securityScheme="ApiKeyAuth", type="apiKey", in="header", name="Authentication" )
