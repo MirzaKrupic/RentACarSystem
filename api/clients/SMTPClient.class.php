@@ -7,10 +7,9 @@ class SMTPClient {
 private $mailer;
   public function __construct(){
     // Create the Transport
-    $transport = (new Swift_SmtpTransport(Config::SMTP_HOST, Config::SMTP_PORT, 'ssl'))
-      ->setUsername(Config::SMTP_USER)
-      ->setPassword(Config::SMTP_PASSWORD)
-    ;
+    $transport = (new Swift_SmtpTransport(Config::SMTP_HOST(), Config::SMTP_PORT(), 'tls'))
+         ->setUsername(Config::SMTP_USER())
+         ->setPassword(Config::SMTP_PASSWORD());
 
     // Create the Mailer using your created Transport
     $this->mailer = new Swift_Mailer($transport);
