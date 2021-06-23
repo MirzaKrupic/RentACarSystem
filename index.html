@@ -202,24 +202,13 @@
             // run app
             app.run();
 
-            if(!window.localStorage.getItem("token")){
+            if (!window.localStorage.getItem("token")){
               window.location = "login.html";
             }else{
-              var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
-              if (user_info.r != "ADMIN"){
-                $(".admin-stuff").remove();
-              }
-              if (user_info.r != "USER"){
-                $(".user-stuff").remove();
-              }
-              if (user_info.r != "company"){
-                $(".company-stuff").remove();
-              }
+              AUtils.role_based_elements();
               $('body').show();
             }
           });
-
-
 
         function doLogout(){
           window.localStorage.clear();
