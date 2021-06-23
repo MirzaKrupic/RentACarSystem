@@ -278,7 +278,7 @@ function file2base64(event){
    var imgurl = null;
    console.log(event.files);
    if(user_info.r == "USER") var url = "api/user/cdn";
-
+   if(user_info.r == "company") var url = "api/companies/cdn";
    var f = event.files[0];
 
    var reader = new FileReader();
@@ -301,6 +301,7 @@ function file2base64(event){
                   console.log(data);
                   imgurl = data.url;
                   if(user_info.r == "USER") urlupd = "api/users/update"
+                  if(user_info.r == "company") urlupd = "api/companies/update"
                   var user = '{"image":"'+imgurl+'"}';
 
                   var parsedJSON = JSON.parse(user);
