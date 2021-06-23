@@ -31,6 +31,23 @@ class Config {
     return Config::get_env("SMTP_PASSWORD", NULL);
   }
 
+    /** CDN config */
+  public static function CDN_KEY(){
+    return Config::get_env("CDN_KEY", "FWM4MO75KONTL2U4WU7J");
+  }
+  public static function CDN_SECRET(){
+    return Config::get_env("CDN_SECRET", "9Ribz39COCQ8uy9c0hQnHWnxYV/ePmjhOomeHphmYww");
+  }
+  public static function CDN_SPACE(){
+    return Config::get_env("CDN_SPACE", "cdn.rentacar.ba");
+  }
+  public static function CDN_BASE_URL(){
+    return Config::get_env("CDN_BASE_URL", "https://fra1.digitaloceanspaces.com");
+  }
+  public static function CDN_REGION(){
+    return Config::get_env("CDN_REGION", "fra1");
+  }
+
   const JWT_SECRET = "y4KvQcZVqn3F7uxQvcFk";
   const JWT_TOKEN_TIME = 604800;
 

@@ -8,6 +8,8 @@ require_once dirname(__FILE__).'/services/CompanyService.class.php';
 require_once dirname(__FILE__).'/services/BrandService.class.php';
 require_once dirname(__FILE__).'/services/RentingService.class.php';
 
+require_once dirname(__FILE__).'/clients/CDNClient.class.php';
+
 use \Firebase\JWT\JWT;
 
 /*/Error handling for API
@@ -46,6 +48,8 @@ Flight::register('companyservice', 'CompanyService');
 Flight::register('brandservice', 'BrandService');
 Flight::register('rentingservice', 'RentingService');
 
+Flight::register('cdnClient', 'CDNClient');
+
 
 require_once dirname(__FILE__).'/routes/middleware.php';
 require_once dirname(__FILE__).'/routes/users.php';
@@ -53,7 +57,7 @@ require_once dirname(__FILE__).'/routes/cars.php';
 require_once dirname(__FILE__).'/routes/companies.php';
 require_once dirname(__FILE__).'/routes/brands.php';
 require_once dirname(__FILE__).'/routes/rentings.php';
-
+require_once dirname(__FILE__)."/routes/cdn.php";
 
 Flight::start();
 ?>
