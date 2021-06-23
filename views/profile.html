@@ -6,7 +6,7 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="d-flex flex-column align-items-center text-center">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                        <img id="profile-image" src="" alt="Admin" class="rounded-circle" width="150">
                         <div class="mt-3">
                           <h4 id="user-name">John Doe</h4>
                           <p id="user-address" class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
@@ -186,6 +186,7 @@
          document.getElementById("user-mail").innerHTML = data.mail;
          document.getElementById("user-phone").innerHTML = data.phone;
          document.getElementById("user-address").innerHTML = data.address;
+         document.getElementById("profile-image").src = data.image;
 
          if(sessionStorage.getItem("showmsg")=='1'){
             toastr.success("User updated successfully");
@@ -273,7 +274,10 @@ function get_history(){
 }
 
 function file2base64(event){
+   var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
+   var imgurl = null;
    console.log(event.files);
+   if(user_info.r == "USER") var url = "api/user/cdn";
 
    var f = event.files[0];
 
@@ -288,14 +292,21 @@ function file2base64(event){
              content: e.target.result.split(',')[1]
            };
            $.ajax({
-                url: "api/admin/cdn",
+                url: url,
                 type: "POST",
                 data: JSON.stringify(upload),
                 contentType: "application/json",
                 beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
                 success: function(data) {
                   console.log(data);
-                  $('#upload-img').attr('src',data.url);
+                  imgurl = data.url;
+                  if(user_info.r == "USER") urlupd = "api/users/update"
+                  var user = '{"image":"'+imgurl+'"}';
+
+                  var parsedJSON = JSON.parse(user);
+                  RestClient.put(urlupd, parsedJSON, function(data){
+                   getProfile();
+                  });
                 },
                 error: function(jqXHR, textStatus, errorThrown ){
                   toastr.error(jqXHR.responseJSON.message);
@@ -306,6 +317,7 @@ function file2base64(event){
    })(f);
    // Read in the image file as a data URL.
    reader.readAsDataURL(f);
+
 
  }
 
