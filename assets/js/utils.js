@@ -34,11 +34,11 @@ class AUtils{
       $(".user-stuff").remove();
       $(".admin-stuff").remove();
     }
-    if (user_info.r != "ADMIN"){
+    if (user_info.r == "ADMIN"){
       $(".company-stuff").remove();
       $(".user-stuff").remove();
     }
-    if (user_info.r != "USER"){
+    if (user_info.r == "USER"){
       $(".admin-stuff").remove();
       $(".company-stuff").remove();
     }
