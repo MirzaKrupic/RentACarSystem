@@ -82,6 +82,10 @@
                       <label>Licence plate</label>
                       <input type="text" name="licence_plate" class="form-control" placeholder="Enter text" required>
                   </div>
+                  <div class="form-group">
+                      <label>Car Image</label>
+                      <input  name="file" type="file" onchange="file2base64(this)">
+                  </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
@@ -108,5 +112,48 @@
       }
     });
   }
+
+  function file2base64(event){
+     var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
+     var imgurl = null;
+     console.log(event.files);
+     var f = event.files[0];
+
+     var reader = new FileReader();
+     // Closure to capture the file information.
+     reader.onload = (function(theFile) {
+         return function(e) {
+             // Render thumbnail.
+             //$('#upload-img').attr('src',e.target.result);
+             var upload = {
+               name: f.name,
+               content: e.target.result.split(',')[1]
+             };
+             $.ajax({
+                  url: "api/companies/cdn",
+                  type: "POST",
+                  data: JSON.stringify(upload),
+                  contentType: "application/json",
+                  beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+                  success: function(data) {
+                    console.log(data);
+                    imgurl = data.url;
+                    var user = '{"image":"'+imgurl+'"}';
+
+                    var parsedJSON = JSON.parse(user);
+                    console.log($("#add-car *[name='id']").val());
+                    RestClient.put("api/companies/cars/"+$("#add-car *[name='id']").val(), parsedJSON, function(data){
+                    });
+                  },
+                  error: function(jqXHR, textStatus, errorThrown ){
+                    toastr.error(jqXHR.responseJSON.message);
+                    console.log(jqXHR);
+                  }
+               });
+         };
+     })(f);
+     // Read in the image file as a data URL.
+     reader.readAsDataURL(f);
+   }
 
 </script>
