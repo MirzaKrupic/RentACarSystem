@@ -6,6 +6,7 @@ class Car{
         event.preventDefault();
         var data = AUtils.form2json($(form));
         data["brand_id"] = $("#brandsdropdown").val();
+        console.log(data);
         if (data.id){
           Car.update(data);
         }else{

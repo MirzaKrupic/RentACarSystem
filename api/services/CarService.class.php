@@ -45,7 +45,8 @@ class CarService extends BaseService{
        "number_of_seats" => $car["number_of_seats"],
        "number_of_gears" => $car["number_of_gears"],
        "number_of_doors" => $car["number_of_doors"],
-       "licence_plate" => $car["licence_plate"]
+       "licence_plate" => $car["licence_plate"],
+       "image" => $car["image"]
      ];
      return parent::add($data);
    } catch (\Exception $e) {
