@@ -99,6 +99,7 @@
         <div class="modal-content">
           <form id="edit-user" role="form">
             <input type="hidden" name="id" />
+            <input type="hidden" name="image" />
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">Edit your profile</h4>
@@ -298,16 +299,9 @@ function file2base64(event){
                 contentType: "application/json",
                 beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
                 success: function(data) {
-                  console.log(data);
                   imgurl = data.url;
-                  if(user_info.r == "USER") urlupd = "api/users/update"
-                  if(user_info.r == "company") urlupd = "api/companies/update"
-                  var user = '{"image":"'+imgurl+'"}';
-
-                  var parsedJSON = JSON.parse(user);
-                  RestClient.put(urlupd, parsedJSON, function(data){
-                   getProfile();
-                  });
+                  $('input[name="image"]').val(imgurl);
+                  console.log($('#image').val());
                 },
                 error: function(jqXHR, textStatus, errorThrown ){
                   toastr.error(jqXHR.responseJSON.message);
