@@ -30,7 +30,7 @@ class AUtils{
 
   static role_based_elements(){
     var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
-    if (user_info.r == "company){
+    if (user_info.r == "company"){
       $(".user-stuff").remove();
       $(".admin-stuff").remove();
     }
