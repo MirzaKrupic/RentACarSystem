@@ -15,4 +15,14 @@ Flight::route('GET /brands/all', function(){
   Flight::json(Flight::brandservice()->get_all_brands($offset, $limit, $order));
 });
 
+/**
+ * @OA\Get(path="/brands/{id}", tags={"brands"},
+ *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Brand ID"),
+ *     @OA\Response(response="200", description="List brands by ID")
+ * )
+ */
+Flight::route('GET /brands/@id', function($id){
+  Flight::json(Flight::brandservice()->get_by_id($id));
+});
+
 ?>
