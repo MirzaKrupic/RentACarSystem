@@ -22,8 +22,7 @@
                           <tr>
                               <th>ID</th>
                               <th>Model</th>
-                              <th>Brand ID</th>
-                              <th>Owner ID</th>
+                              <th>Brand</th>
                               <th>Date of creation</th>
                               <th>Number of doors</th>
                               <th>Number of gears</th>
@@ -103,7 +102,6 @@
 
   function getBrands(){
     RestClient.get("api/brands/all", function(data){
-      console.log(data);
       for(var i = 0; i < data.length; i++){
         var option = document.createElement("option");
         option.value = data[i].id;

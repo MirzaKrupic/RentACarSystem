@@ -18,6 +18,12 @@ class Car{
   }
 
   static get_all(){
+    var globalBrands = [];
+    RestClient.get("api/brands/all", function(data){
+      for(var i = 0; i < data.length; i++){
+        globalBrands.push(data[i]);
+      }
+    });
     $('#cars-table').DataTable( {
         processing: true,
         serverSide: true,
@@ -58,8 +64,17 @@ class Car{
             }
           },
           { "data": "model" },
-          { "data": "brand_id" },
-          { "data": "owner_id" },
+          { "data": "brand_id",
+            "render": function ( data, type, row, meta ) {
+              var brandName = null;
+              for(var i = 0; i < globalBrands.length; i++){
+                if(globalBrands[i].id == data){
+                  brandName = globalBrands[i].name;
+                }
+              }
+              return brandName;
+            }
+          },
           { "data": "created_at" },
           { "data": "number_of_doors" },
           { "data": "number_of_gears" },
