@@ -144,7 +144,7 @@
         getProfile();
         get_history();
       }
-      if (user_info.r == "company"){
+      if (user_info.r == "company" || user_info.r == "ADMIN"){
         $(".user-stuff").remove();
         getProfile();
       }
@@ -154,7 +154,7 @@
 
   function getProfile(){
     var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
-    if(user_info.r == "USER"){
+    if(user_info.r == "USER" || user_info.r == "ADMIN"){
       var url = "api/users/profile/";
     }else{
       var url = "api/companies/profile/";
@@ -205,7 +205,7 @@
 
   function user_pre_edit(){
     var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
-    if(user_info.r == "USER"){
+    if(user_info.r == "USER" || user_info.r == "ADMIN"){
       var url = "api/users/profile/";
     }else{
       var url = "api/companies/profile/";
@@ -220,7 +220,7 @@ function save_user(){
   sessionStorage.setItem("showmsg", "1");
   var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
   var user = AUtils.form2json("#edit-user");
-  if(user_info.r == "USER"){
+  if(user_info.r == "USER" || user_info.r == "ADMIN"){
     var url = "api/users/update/";
   }else{
     var url = "api/companies/update/";
@@ -277,7 +277,7 @@ function file2base64(event){
    var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
    var imgurl = null;
    console.log(event.files);
-   if(user_info.r == "USER") var url = "api/user/cdn";
+   if(user_info.r == "USER" || user_info.r == "ADMIN") var url = "api/user/cdn";
    if(user_info.r == "company") var url = "api/companies/cdn";
    var f = event.files[0];
 
