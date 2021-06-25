@@ -46,7 +46,7 @@ class Login{
     console.log(radioValue);
     var type = "NONE";
     if(radioValue == "company") type = "api/companies/register";
-    else if(radioValue == "user") type = "api/user/register";
+    else if(radioValue == "user") type = "api/users/register";
     var data = AUtils.form2json("#register-form");
     delete data["userTypeReg"];
     console.log(data);
@@ -65,7 +65,7 @@ class Login{
       var radioValue = $("input[name='userType']:checked").val();
       var type = "NONE";
       if(radioValue == "company") type = "api/companies/login";
-      else if(radioValue == "user") type = "api/user/login";
+      else if(radioValue == "user") type = "api/users/login";
       RestClient.post(type, AUtils.form2json("#login-form"), function(data){
         window.localStorage.setItem("token", data.token);
         window.location = "index.html";
