@@ -16,8 +16,8 @@ Flight::route('/companies/*', function(){
 
 /* middleware for users */
 Flight::route('/users/*', function(){
-  if(Flight::request()->url == '/users/reset' || Flight::request()->url == '/users/register' || Flight::request()->url == '/users/forgot' || Flight::request()->url == '/users/login' || Flight::request()->url == '/users/confirm/@token') return TRUE;
-
+  if(Flight::request()->url == '/users/reset' || Flight::request()->url == '/users/register' || Flight::request()->url == '/users/forgot' || Flight::request()->url == '/users/login') return TRUE;
+  if(startsWith(Flight::request()->url, '/users/confirm/')) return TRUE;
   try {
     $user = @(array)\Firebase\JWT\JWT::decode(Flight::header("Authentication"), Config::JWT_SECRET, ["HS256"]);
     Flight::set('user', $user);

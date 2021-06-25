@@ -22,13 +22,13 @@ class Config {
     return Config::get_env("SMTP_HOST", "smtp.googlemail.com");
   }
   public static function SMTP_PORT(){
-    return Config::get_env("SMTP_PORT", "465");
+    return Config::get_env("SMTP_PORT", 465);
   }
   public static function SMTP_USER(){
     return Config::get_env("SMTP_USER", "mirza.krupic@stu.ibu.edu.ba");
   }
   public static function SMTP_PASSWORD(){
-    return Config::get_env("SMTP_PASSWORD", NULL);
+    return Config::get_env("SMTP_PASSWORD", null);
   }
 
     /** CDN config */

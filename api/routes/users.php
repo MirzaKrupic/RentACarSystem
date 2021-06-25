@@ -51,7 +51,7 @@ Flight::route('GET /admin/users/@id', function($id){
 });
 
 /**
- * @OA\Post(path="/user/register", tags={"users"}, security={{"ApiKeyAuth": {}}},
+ * @OA\Post(path="/users/register", tags={"users"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -73,7 +73,7 @@ Flight::route('POST /users/register', function(){
 });
 
 /**
- * @OA\Post(path="/user/login", tags={"users"}, security={{"ApiKeyAuth": {}}},
+ * @OA\Post(path="/users/login", tags={"users"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -92,7 +92,7 @@ Flight::route('POST /users/login', function(){
 });
 
 /**
- * @OA\Post(path="/user/forgot", tags={"users"}, description="Send recovery URL to users email address", security={{"ApiKeyAuth": {}}},
+ * @OA\Post(path="/users/forgot", tags={"users"}, description="Send recovery URL to users email address", security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -111,7 +111,7 @@ Flight::route('POST /users/forgot', function(){
 });
 
 /**
- * @OA\Post(path="/user/reset", tags={"users"}, description="Reset users password using recovery token", security={{"ApiKeyAuth": {}}},
+ * @OA\Post(path="/users/reset", tags={"users"}, description="Reset users password using recovery token", security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -130,12 +130,9 @@ Flight::route('POST /users/reset', function(){
 });
 
 /**
-*
- * @OA\Get(
- *     path="/user/confirm/{token}",tags={"users"}, security={{"ApiKeyAuth": {}}},
- * @OA\Parameter(@OA\Schema(type="string"), in="path", name="token",  description="Token of user"
- * ),
- *     @OA\Response(response="200", description="Confirm registred user")
+ * @OA\Get(path="/users/confirm/{token}", tags={"users"},
+ *     @OA\Parameter(type="string", in="path", name="token", default=123, description="Temporary token for activating account"),
+ *     @OA\Response(response="200", description="Message upon successfull activation.")
  * )
  */
 
@@ -219,5 +216,7 @@ Flight::route('GET /users/profile', function(){
     Flight::json(Flight::userservice()->get_by_id(Flight::get('user')['id']));
 
 });
+
+
 
 ?>
