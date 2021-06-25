@@ -66,7 +66,7 @@ class UserService extends BaseService{
   $user = [
     "name" => $user['name'],
     "mail" => $user['mail'],
-    "dob" => $user['dob'],
+    "address" => $user['address'],
     "password" => md5($user['password']),
     "status" => "PENDING",
     "role" => "USER",

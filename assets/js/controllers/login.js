@@ -42,7 +42,15 @@ class Login{
 
   static register(){
     $("#register-link").prop('disabled', true);
-    RestClient.post("api/companies/register", AUtils.form2json("#register-form"), function(data){
+    var radioValue = $("input[name='userTypeReg']:checked").val();
+    console.log(radioValue);
+    var type = "NONE";
+    if(radioValue == "company") type = "api/companies/register";
+    else if(radioValue == "user") type = "api/user/register";
+    var data = AUtils.form2json("#register-form");
+    delete data["userTypeReg"];
+    console.log(data);
+    RestClient.post(type, data, function(data){
       $("#register-form-container").addClass("hidden");
       window.location = "login.html";
       sessionStorage.setItem("showmsg", "1");

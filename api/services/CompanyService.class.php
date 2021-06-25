@@ -24,7 +24,9 @@ class CompanyService extends BaseService{
 
       if($db_user['password'] != md5($company['password'])) throw new Exception("Invalid password", 400);
 
-      $jwt = \Firebase\JWT\JWT::encode(["id" => $db_user["id"], "r" => "company"] , Config::JWT_SECRET);
+      if($db_user['status'] != 'ACTIVE') throw new Exception("Account is not active", 400);
+
+      $jwt = \Firebase\JWT\JWT::encode(["id" => $db_user["id"],"name" => $db_user["name"] , "r" => "company"] , Config::JWT_SECRET);
 
       return ["token" => $jwt];
   }
