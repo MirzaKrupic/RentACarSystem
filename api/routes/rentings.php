@@ -14,7 +14,7 @@
  */
 
 Flight::route('POST /users/rentings/add', function(){
-  Flight::json(Flight::rentingservice()->add_renting(Flight::get('user')['id'], Flight::request()->data->getData()));
+  Flight::json(Flight::rentingService()->add_renting(Flight::get('user')['id'], Flight::request()->data->getData()));
 });
 
 /**
@@ -30,7 +30,7 @@ Flight::route('POST /users/rentings/add', function(){
  * )
  */
 Flight::route('PUT /users/rent/@id', function($id){
-  Flight::json(Flight::carservice()->update_car_status(intval($id)));
+  Flight::json(Flight::carService()->update_car_status(intval($id)));
 });
 
 /**
@@ -46,7 +46,7 @@ Flight::route('GET /users/rentings/', function(){
   }else{
     Flight::json($template);
   }*/
-  Flight::json(Flight::rentingservice()->get_rent_by_user_id(Flight::get('user')['id']));
+  Flight::json(Flight::rentingService()->get_rent_by_user_id(Flight::get('user')['id']));
 });
 
 /**
@@ -65,10 +65,10 @@ Flight::route('GET /users/rentings/all/', function(){
   $search = Flight::query('search');
   $order = Flight::query('order', '-id');
 
-  $total = Flight::rentingservice()->get_rentings($account_id, $offset, $limit, $search, $order, TRUE);
+  $total = Flight::rentingService()->get_rentings($account_id, $offset, $limit, $search, $order, TRUE);
   header('total-records: ' . $total['total']);
 
-  Flight::json(Flight::rentingservice()->get_rentings($account_id, $offset, $limit, $search, $order));
+  Flight::json(Flight::rentingService()->get_rentings($account_id, $offset, $limit, $search, $order));
 });
 
 ?>

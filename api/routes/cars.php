@@ -16,10 +16,10 @@ Flight::route('GET /companies/cars', function(){
   $search = Flight::query('search');
   $order = Flight::query('order', '-id');
 
-  $total = Flight::carservice()->get_cars($account_id, $offset, $limit, $search, $order, TRUE);
+  $total = Flight::carService()->get_cars($account_id, $offset, $limit, $search, $order, TRUE);
   header('total-records: ' . $total['total']);
 
-  Flight::json(Flight::carservice()->get_cars($account_id, $offset, $limit, $search, $order));
+  Flight::json(Flight::carService()->get_cars($account_id, $offset, $limit, $search, $order));
 });
 
 /**
@@ -35,7 +35,7 @@ Flight::route('GET /cars/all', function(){
   $limit = Flight::query('limit', 25);
   $order = Flight::query('order', '-id');
 
-  Flight::json(Flight::carservice()->get_all_cars($offset, $limit, $order));
+  Flight::json(Flight::carService()->get_all_cars($offset, $limit, $order));
 });
 
 /**
@@ -51,7 +51,7 @@ Flight::route('GET /companies/cars/@id', function($id){
   }else{
     Flight::json($template);
   }*/
-  Flight::json(Flight::carservice()->get_car_by_owner_and_id(Flight::get('company')['id'], $id));
+  Flight::json(Flight::carService()->get_car_by_owner_and_id(Flight::get('company')['id'], $id));
 });
 
 /**
@@ -67,7 +67,7 @@ Flight::route('GET /cars/@id', function($id){
   }else{
     Flight::json($template);
   }*/
-  Flight::json(Flight::carservice()->get_car_by_id($id));
+  Flight::json(Flight::carService()->get_car_by_id($id));
 });
 
 /**
@@ -89,7 +89,7 @@ Flight::route('GET /cars/@id', function($id){
  */
 
 Flight::route('POST /companies/cars/add', function(){
-  Flight::json(Flight::carservice()->add_cars(Flight::get('company'), Flight::request()->data->getData()));
+  Flight::json(Flight::carService()->add_cars(Flight::get('company'), Flight::request()->data->getData()));
 });
 
 /**
@@ -107,7 +107,7 @@ Flight::route('POST /companies/cars/add', function(){
  * )
  */
 Flight::route('PUT /companies/cars/@id', function($id){
-  Flight::json(Flight::carservice()->update_car(Flight::get('company'), intval($id), Flight::request()->data->getData()));
+  Flight::json(Flight::carService()->update_car(Flight::get('company'), intval($id), Flight::request()->data->getData()));
 });
 
 

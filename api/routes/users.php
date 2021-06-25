@@ -32,7 +32,7 @@ Flight::route('GET /admin/users', function(){
   $search = Flight::query('search');
   $order = Flight::query('order', "-id");
 
-  Flight::json(Flight::userservice()->get_users($search, $offset, $limit, $order));
+  Flight::json(Flight::userService()->get_users($search, $offset, $limit, $order));
 });
 
 /**
@@ -46,7 +46,7 @@ Flight::route('GET /admin/users', function(){
 
 Flight::route('GET /admin/users/@id', function($id){
     if(Flight::get('user')['id'] != $id) throw new Exception("This user is not for you");
-    Flight::json(Flight::userservice()->get_by_id($id));
+    Flight::json(Flight::userService()->get_by_id($id));
 
 });
 
@@ -68,7 +68,7 @@ Flight::route('GET /admin/users/@id', function($id){
 
 Flight::route('POST /users/register', function(){
   $data = Flight::request()->data->getData();
-  Flight::userservice()->register($data);
+  Flight::userService()->register($data);
   Flight::json(["mssage" => "Confirmation email has been sent. Please confirm your account"]);
 });
 
@@ -88,7 +88,7 @@ Flight::route('POST /users/register', function(){
 
 Flight::route('POST /users/login', function(){
   $data = Flight::request()->data->getData();
-  Flight::json(Flight::userservice()->login($data));
+  Flight::json(Flight::userService()->login($data));
 });
 
 /**
@@ -106,7 +106,7 @@ Flight::route('POST /users/login', function(){
 
 Flight::route('POST /users/forgot', function(){
   $data = Flight::request()->data->getData();
-  Flight::userservice()->forgot($data);
+  Flight::userService()->forgot($data);
   Flight::json(["message" => "Recovery link has been sent to your email"]);
 });
 
@@ -125,7 +125,7 @@ Flight::route('POST /users/forgot', function(){
  */
 Flight::route('POST /users/reset', function(){
   $data = Flight::request()->data->getData();
-  Flight::userservice()->reset($data);
+  Flight::userService()->reset($data);
   Flight::json(["message" => "Your password has been changed"]);
 });
 
@@ -137,7 +137,7 @@ Flight::route('POST /users/reset', function(){
  */
 
 Flight::route('GET /users/confirm/@token', function($token){
-  Flight::userservice()->confirm($token);
+  Flight::userService()->confirm($token);
   Flight::json(["message" => "Your account has been activated."]);
 });
 
@@ -158,7 +158,7 @@ Flight::route('GET /users/confirm/@token', function($token){
 
 Flight::route('PUT /users/update', function(){
   $data = Flight::request()->data->getData();
-  Flight::json(Flight::userservice()->update(Flight::get('user')['id'], $data));
+  Flight::json(Flight::userService()->update(Flight::get('user')['id'], $data));
 });
 
 
@@ -178,7 +178,7 @@ Flight::route('PUT /users/update', function(){
 
 Flight::route('PUT /users/@id', function($id){
   $data = Flight::request()->data->getData();
-  Flight::json(Flight::userservice()->update(Flight::get('user')['id'], $data));
+  Flight::json(Flight::userService()->update(Flight::get('user')['id'], $data));
 });
 
 
@@ -200,7 +200,7 @@ Flight::route('PUT /users/@id', function($id){
  */
 Flight::route('POST /admin/users', function(){
   $data = Flight::request()->data->getData();
-  Flight::json(Flight::userservice()->add($data));
+  Flight::json(Flight::userService()->add($data));
 });
 
 /**
@@ -213,7 +213,7 @@ Flight::route('POST /admin/users', function(){
  */
 
 Flight::route('GET /users/profile', function(){
-    Flight::json(Flight::userservice()->get_by_id(Flight::get('user')['id']));
+    Flight::json(Flight::userService()->get_by_id(Flight::get('user')['id']));
 
 });
 

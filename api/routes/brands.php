@@ -12,7 +12,7 @@ Flight::route('GET /brands/all', function(){
   $limit = Flight::query('limit', 25);
   $order = Flight::query('order', '-id');
 
-  Flight::json(Flight::brandservice()->get_all_brands($offset, $limit, $order));
+  Flight::json(Flight::brandService()->get_all_brands($offset, $limit, $order));
 });
 
 /**
@@ -22,7 +22,7 @@ Flight::route('GET /brands/all', function(){
  * )
  */
 Flight::route('GET /brands/@id', function($id){
-  Flight::json(Flight::brandservice()->get_by_id($id));
+  Flight::json(Flight::brandService()->get_by_id($id));
 });
 
 ?>

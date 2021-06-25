@@ -18,7 +18,7 @@ Flight::route('GET /admin/companies', function(){
   $search = Flight::query('search');
   $order = Flight::query('order', '-id');
 
-  Flight::json(Flight::companyservice()->get_companies($id, $offset, $limit, $search, $order));
+  Flight::json(Flight::companyService()->get_companies($id, $offset, $limit, $search, $order));
 });
 
 
@@ -40,7 +40,7 @@ Flight::route('GET /admin/companies', function(){
 
 Flight::route('POST /admin/companies', function(){
   $data = Flight::request()->data->getData();
-  Flight::json(Flight::companyservice()->add($data));
+  Flight::json(Flight::companyService()->add($data));
 });
 
 /**
@@ -61,7 +61,7 @@ Flight::route('POST /admin/companies', function(){
 
 Flight::route('POST /companies/register', function(){
   $data = Flight::request()->data->getData();
-  Flight::companyservice()->register($data);
+  Flight::companyService()->register($data);
   Flight::json(["mssage" => "Confirmation email has been sent. Please confirm your account"]);
 });
 
@@ -81,7 +81,7 @@ Flight::route('POST /companies/register', function(){
 
 Flight::route('POST /companies/login', function(){
   $data = Flight::request()->data->getData();
-  Flight::json(Flight::companyservice()->login($data));
+  Flight::json(Flight::companyService()->login($data));
 });
 
 /**
@@ -95,7 +95,7 @@ Flight::route('POST /companies/login', function(){
  */
 
 Flight::route('GET /companies/confirm/@token', function($token){
-  Flight::companyservice()->confirm($token);
+  Flight::companyService()->confirm($token);
   Flight::json(["message" => "Your account has been activated."]);
 });
 
@@ -109,7 +109,7 @@ Flight::route('GET /companies/confirm/@token', function($token){
  */
 
 Flight::route('GET /companies/profile', function(){
-    Flight::json(Flight::companyservice()->get_by_id(Flight::get('company')['id']));
+    Flight::json(Flight::companyService()->get_by_id(Flight::get('company')['id']));
 
 });
 
@@ -130,7 +130,7 @@ Flight::route('GET /companies/profile', function(){
 
 Flight::route('PUT /companies/update', function(){
   $data = Flight::request()->data->getData();
-  Flight::json(Flight::companyservice()->update(Flight::get('company')['id'], $data));
+  Flight::json(Flight::companyService()->update(Flight::get('company')['id'], $data));
 });
 
 ?>

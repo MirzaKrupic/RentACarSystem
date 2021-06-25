@@ -42,11 +42,11 @@ Flight::route('GET /', function(){
 });
 
 
-Flight::register('userservice', 'UserService');
-Flight::register('carservice', 'CarService');
-Flight::register('companyservice', 'CompanyService');
-Flight::register('brandservice', 'BrandService');
-Flight::register('rentingservice', 'RentingService');
+Flight::register('userService', 'UserService');
+Flight::register('carService', 'CarService');
+Flight::register('companyService', 'CompanyService');
+Flight::register('brandService', 'BrandService');
+Flight::register('rentingService', 'RentingService');
 
 Flight::register('cdnClient', 'CDNClient');
 
