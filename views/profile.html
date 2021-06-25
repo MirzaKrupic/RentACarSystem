@@ -278,7 +278,7 @@ function file2base64(event){
    var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
    var imgurl = null;
    console.log(event.files);
-   if(user_info.r == "USER" || user_info.r == "ADMIN") var url = "api/user/cdn";
+   if(user_info.r == "USER" || user_info.r == "ADMIN") var url = "api/users/cdn";
    if(user_info.r == "company") var url = "api/companies/cdn";
    var f = event.files[0];
 

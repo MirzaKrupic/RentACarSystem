@@ -29,7 +29,7 @@ Flight::route('POST /users/rentings/add', function(){
  *     @OA\Response(response="200", description="Update car rental status")
  * )
  */
-Flight::route('PUT /user/rent/@id', function($id){
+Flight::route('PUT /users/rent/@id', function($id){
   Flight::json(Flight::carservice()->update_car_status(intval($id)));
 });
 

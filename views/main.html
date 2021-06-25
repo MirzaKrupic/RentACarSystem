@@ -107,7 +107,7 @@
       toastr.success("You rented this car successfully");
     });
 
-    RestClient.put("api/user/rent/"+car, null, function(data){
+    RestClient.put("api/users/rent/"+car, null, function(data){
     });
     document.getElementById("carcardssection").innerHTML = "";
     getAllCars();

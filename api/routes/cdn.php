@@ -19,7 +19,7 @@ Flight::route('POST /admin/cdn', function(){
 });
 
 /**
- * @OA\Post(path="/user/cdn", tags={"user", "cdn"}, security={{"ApiKeyAuth": {}}},
+ * @OA\Post(path="/user/cdn", tags={"users", "cdn"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Upload file to CDN", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
@@ -31,7 +31,7 @@ Flight::route('POST /admin/cdn', function(){
  *  @OA\Response(response="200", description="Upload file to CDN")
  * )
  */
-Flight::route('POST /user/cdn', function(){
+Flight::route('POST /users/cdn', function(){
   $data = Flight::request()->data->getData();
   $url = Flight::cdnClient()->upload($data['name'], $data['content']);
   Flight::json(["url" => $url]);
