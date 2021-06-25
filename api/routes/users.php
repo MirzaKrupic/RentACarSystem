@@ -47,7 +47,6 @@ Flight::route('GET /admin/users', function(){
 Flight::route('GET /admin/users/@id', function($id){
     if(Flight::get('user')['id'] != $id) throw new Exception("This user is not for you");
     Flight::json(Flight::userService()->get_by_id($id));
-
 });
 
 /**
@@ -161,7 +160,6 @@ Flight::route('PUT /users/update', function(){
   Flight::json(Flight::userService()->update(Flight::get('user')['id'], $data));
 });
 
-
 /**
  * @OA\Put(
  *     path="/users/{id}",tags={"users"}, security={{"ApiKeyAuth": {}}},
@@ -181,8 +179,6 @@ Flight::route('PUT /users/@id', function($id){
   Flight::json(Flight::userService()->update(Flight::get('user')['id'], $data));
 });
 
-
-
 /**
  * @OA\Post(path="/admin/users", tags={"admin", "users"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic account info", required=true,
@@ -198,6 +194,7 @@ Flight::route('PUT /users/@id', function($id){
  *  @OA\Response(response="200", description="User that has been added into database with ID assigned.")
  * )
  */
+
 Flight::route('POST /admin/users', function(){
   $data = Flight::request()->data->getData();
   Flight::json(Flight::userService()->add($data));
@@ -216,7 +213,5 @@ Flight::route('GET /users/profile', function(){
     Flight::json(Flight::userService()->get_by_id(Flight::get('user')['id']));
 
 });
-
-
 
 ?>

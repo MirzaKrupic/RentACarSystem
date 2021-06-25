@@ -30,16 +30,16 @@ class RentingDao extends BaseDao{
     $query .= "FROM rentings r, cars c
                WHERE user_id = :user_id AND r.car_id=c.id ";
     if(isset($search)){
-        $query .= "AND LOWER(model) LIKE CONCAT('%', :search, '%') ";
-        $params['search'] = strtolower($search);
+      $query .= "AND LOWER(model) LIKE CONCAT('%', :search, '%') ";
+      $params['search'] = strtolower($search);
     }
     if ($total){
        return $this->query_unique($query, $params);
      }else{
-       $query .="ORDER BY ${order_column} ${order_direction} ";
-       $query .="LIMIT ${limit} OFFSET ${offset}";
+      $query .="ORDER BY ${order_column} ${order_direction} ";
+      $query .="LIMIT ${limit} OFFSET ${offset}";
 
-       return $this->query($query, $params);
+      return $this->query($query, $params);
      }
   }
 }

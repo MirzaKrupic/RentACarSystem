@@ -4,7 +4,8 @@ require_once  dirname(__FILE__).'/../../vendor/autoload.php';
 
 class SMTPClient {
 
-private $mailer;
+  private $mailer;
+
   public function __construct(){
     // Create the Transport
     $transport = (new Swift_SmtpTransport(Config::SMTP_HOST(), Config::SMTP_PORT(), 'ssl'))
@@ -64,9 +65,7 @@ private $mailer;
     } catch(Exception $e) {
         echo $e->getMessage();
     }
-}
-
-
+  }
 }
 
 ?>

@@ -106,9 +106,9 @@ Flight::route('POST /companies/cars/add', function(){
  *     @OA\Response(response="200", description="Update email template")
  * )
  */
+
 Flight::route('PUT /companies/cars/@id', function($id){
   Flight::json(Flight::carService()->update_car(Flight::get('company'), intval($id), Flight::request()->data->getData()));
 });
-
 
 ?>

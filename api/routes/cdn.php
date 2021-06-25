@@ -12,6 +12,7 @@
  *  @OA\Response(response="200", description="Upload file to CDN")
  * )
  */
+
 Flight::route('POST /admin/cdn', function(){
   $data = Flight::request()->data->getData();
   $url = Flight::cdnClient()->upload($data['name'], $data['content']);
@@ -31,6 +32,7 @@ Flight::route('POST /admin/cdn', function(){
  *  @OA\Response(response="200", description="Upload file to CDN")
  * )
  */
+ 
 Flight::route('POST /users/cdn', function(){
   $data = Flight::request()->data->getData();
   $url = Flight::cdnClient()->upload($data['name'], $data['content']);
@@ -50,6 +52,7 @@ Flight::route('POST /users/cdn', function(){
  *  @OA\Response(response="200", description="Upload file to CDN")
  * )
  */
+
 Flight::route('POST /companies/cdn', function(){
   $data = Flight::request()->data->getData();
   $url = Flight::cdnClient()->upload($data['name'], $data['content']);

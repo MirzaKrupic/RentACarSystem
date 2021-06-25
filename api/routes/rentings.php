@@ -29,6 +29,7 @@ Flight::route('POST /users/rentings/add', function(){
  *     @OA\Response(response="200", description="Update car rental status")
  * )
  */
+
 Flight::route('PUT /users/rent/@id', function($id){
   Flight::json(Flight::carService()->update_car_status(intval($id)));
 });
@@ -39,6 +40,7 @@ Flight::route('PUT /users/rent/@id', function($id){
  *     @OA\Response(response="200", description="Fetch individual email template")
  * )
  */
+
 Flight::route('GET /users/rentings/', function(){
   /*$template = Flight::emailTemplateService()->get_by_id($id);
   if ($template['account_id'] != Flight::get('user')['aid']){
@@ -46,6 +48,7 @@ Flight::route('GET /users/rentings/', function(){
   }else{
     Flight::json($template);
   }*/
+
   Flight::json(Flight::rentingService()->get_rent_by_user_id(Flight::get('user')['id']));
 });
 
@@ -58,6 +61,7 @@ Flight::route('GET /users/rentings/', function(){
  *     @OA\Response(response="200", description="List email templates for user")
  * )
  */
+ 
 Flight::route('GET /users/rentings/all/', function(){
   $account_id = Flight::get('user')['id'];
   $offset = Flight::query('offset', 0);

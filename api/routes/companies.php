@@ -21,7 +21,6 @@ Flight::route('GET /admin/companies', function(){
   Flight::json(Flight::companyService()->get_companies($id, $offset, $limit, $search, $order));
 });
 
-
 /**
  * @OA\Post(path="/admin/companies", tags={"admin","companies"}, security={{"ApiKeyAuth": {}}},
  *   @OA\RequestBody(description="Basic company info", required=true,

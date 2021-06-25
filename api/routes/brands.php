@@ -7,6 +7,7 @@
  *     @OA\Response(response="200", description="List email templates for user")
  * )
  */
+
 Flight::route('GET /brands/all', function(){
   $offset = Flight::query('offset', 0);
   $limit = Flight::query('limit', 25);
@@ -21,6 +22,7 @@ Flight::route('GET /brands/all', function(){
  *     @OA\Response(response="200", description="List brands by ID")
  * )
  */
+ 
 Flight::route('GET /brands/@id', function($id){
   Flight::json(Flight::brandService()->get_by_id($id));
 });

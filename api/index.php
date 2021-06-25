@@ -41,7 +41,6 @@ Flight::route('GET /', function(){
   Flight::redirect('/docs/index.php');
 });
 
-
 Flight::register('userService', 'UserService');
 Flight::register('carService', 'CarService');
 Flight::register('companyService', 'CompanyService');
@@ -49,7 +48,6 @@ Flight::register('brandService', 'BrandService');
 Flight::register('rentingService', 'RentingService');
 
 Flight::register('cdnClient', 'CDNClient');
-
 
 require_once dirname(__FILE__).'/routes/middleware.php';
 require_once dirname(__FILE__).'/routes/users.php';

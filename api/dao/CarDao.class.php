@@ -18,17 +18,16 @@ class CarDao extends BaseDao{
     $query .= "FROM cars
                WHERE owner_id = :owner_id ";
     if(isset($search)){
-        $query .= "AND LOWER(model) LIKE CONCAT('%', :search, '%') ";
-        $params['search'] = strtolower($search);
+      $query .= "AND LOWER(model) LIKE CONCAT('%', :search, '%') ";
+      $params['search'] = strtolower($search);
     }
     if ($total){
-       return $this->query_unique($query, $params);
-     }else{
-       $query .="ORDER BY ${order_column} ${order_direction} ";
-       $query .="LIMIT ${limit} OFFSET ${offset}";
-
-       return $this->query($query, $params);
-     }
+      return $this->query_unique($query, $params);
+    }else{
+      $query .="ORDER BY ${order_column} ${order_direction} ";
+      $query .="LIMIT ${limit} OFFSET ${offset}";
+      return $this->query($query, $params);
+    }
   }
 
   public function get_car_by_owner_and_id($owner_id, $id){

@@ -13,10 +13,6 @@ class BaseDao {
     };
 
     $order_column =  substr($order,1);
-
-
-       //     $order_column = $this->connection->quote(substr($order,1));
-
     return [$order_column, $order_direction];
   }
 
@@ -37,29 +33,29 @@ class BaseDao {
     }
 
     $query=substr($query, 0, -2).") VALUES (";
-      foreach ($entity as $column => $value) {
+        foreach ($entity as $column => $value) {
         $query .= ":".$column . ", " ;
       }
-      $query=substr($query, 0, -2).")";
+    $query=substr($query, 0, -2).")";
 
-  $stmt= $this->connection->prepare($query);
-  $stmt->execute($entity);
-  $user['id']=$this->connection->lastInsertId();
-  return $user;
+    $stmt= $this->connection->prepare($query);
+    $stmt->execute($entity);
+    $user['id']=$this->connection->lastInsertId();
+    return $user;
   }
 
   protected function execute_update($table, $id, $entity, $id_column = "id"){
-  $query = "UPDATE ${table} SET ";
-  foreach($entity as $name => $value){
-    $query .= $name ."= :". $name. ", ";
-  }
-  $query = substr($query, 0, -2);
-  $query .= " WHERE ${id_column} = :id";
+    $query = "UPDATE ${table} SET ";
+    foreach($entity as $name => $value){
+      $query .= $name ."= :". $name. ", ";
+    }
+    $query = substr($query, 0, -2);
+    $query .= " WHERE ${id_column} = :id";
 
-  $stmt= $this->connection->prepare($query);
-  $entity['id'] = $id;
-  $stmt->execute($entity);
-}
+    $stmt= $this->connection->prepare($query);
+    $entity['id'] = $id;
+    $stmt->execute($entity);
+  }
 
   protected function query($query, $params){
     $stmt = $this->connection->prepare($query);
