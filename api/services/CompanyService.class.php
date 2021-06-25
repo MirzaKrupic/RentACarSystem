@@ -26,7 +26,7 @@ class CompanyService extends BaseService{
 
       if($db_user['status'] != 'ACTIVE') throw new Exception("Account is not active", 400);
 
-      $jwt = \Firebase\JWT\JWT::encode(["id" => $db_user["id"],"name" => $db_user["name"] , "r" => "company"] , Config::JWT_SECRET);
+      $jwt = \Firebase\JWT\JWT::encode(["exp" => (time() + Config::JWT_TOKEN_TIME), "id" => $db_user["id"],"name" => $db_user["name"] , "r" => "company"] , Config::JWT_SECRET);
 
       return ["token" => $jwt];
   }
