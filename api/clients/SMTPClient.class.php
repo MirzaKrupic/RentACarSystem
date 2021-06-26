@@ -50,13 +50,13 @@ class SMTPClient {
     }
   }
 
-  public function send_user_recovery_token($user){
+  public function send_user_recovery_token($user, $type){
     try {
         // Create a message
         $message = (new Swift_Message('Reset Your Password'))
           ->setFrom(['mirza.krupic@stu.ibu.edu.ba' => 'Rent a car'])
           ->setTo([$user['mail']])
-          ->setBody('Here is the recovery link: http://localhost/rentacarsystem/login.html?token='.$user['token'])
+          ->setBody('Here is the recovery link: http://localhost/rentacarsystem/login.html?token='.$user['token'].'&type='.$type)
           ->setContentType('text/html')
         ;
 

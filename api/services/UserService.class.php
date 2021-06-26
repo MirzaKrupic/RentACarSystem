@@ -41,9 +41,8 @@ class UserService extends BaseService{
     $db_user = $this->update($db_user['id'], ['token' => md5(random_bytes(16))]);
 
     // send email
-    $this->smtpClient->send_user_recovery_token($db_user);
+    $this->smtpClient->send_user_recovery_token($db_user, "user");
   }
-
 
   public function login($user){
     $db_user = $this->dao->get_user_by_email($user['mail']);
