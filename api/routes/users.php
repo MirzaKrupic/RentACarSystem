@@ -45,7 +45,6 @@ Flight::route('GET /admin/users', function(){
  */
 
 Flight::route('GET /admin/users/@id', function($id){
-    if(Flight::get('user')['id'] != $id) throw new Exception("This user is not for you");
     Flight::json(Flight::userService()->get_by_id($id));
 });
 
@@ -211,7 +210,25 @@ Flight::route('POST /admin/users', function(){
 
 Flight::route('GET /users/profile', function(){
     Flight::json(Flight::userService()->get_by_id(Flight::get('user')['id']));
+});
 
+/**
+ * @OA\Put(path="/admin/users/{id}", tags={"admin"}, security={{"ApiKeyAuth": {}}},
+ *   @OA\Parameter(type="integer", in="path", name="id", default=1),
+ *   @OA\RequestBody(description="Basic emiail template info that is going to be updated", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+ *    				 @OA\Property(property="model", required="true", type="string", example="audi",	description="Model of the car" ),
+ *    				 @OA\Property(property="brand_id", required="true", type="integer", example="subject",	description="10" ),
+ *          )
+ *       )
+ *     ),
+ *     @OA\Response(response="200", description="Update email template")
+ * )
+ */
+
+Flight::route('PUT /admin/users/@id', function($id){
+  Flight::json(Flight::userService()->update($id, Flight::request()->data->getData()));
 });
 
 ?>
