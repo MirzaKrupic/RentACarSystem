@@ -80,9 +80,6 @@
                                 <!-- /input-group -->
                             </li>
                             <li>
-                                <a href="#dashboard" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                            </li>
-                            <li>
                                 <a href="#users"><i class="fa fa-user fa-fw"></i> Users</a>
                             </li>
                             <li>
@@ -101,6 +98,7 @@
 
             <main id="jqueryspapp" role="main">
               <section id="dashboard" data-load="dashboard.html" ></section>
+              <section id="users" data-load="users.html" ></section>
               <section id="tables" data-load="tables.html" ></section>
               <section id="notifications" data-load="notifications.html" ></section>
               <section id="company-cars" data-load="company-cars.html" ></section>
@@ -129,6 +127,8 @@
         <!-- Custom Theme JavaScript -->
         <script src="./assets/js/startmin.js"></script>
         <script src="./assets/js/utils.js"></script>
+        <script src="./assets/js/restClient.js"></script>
+        <script src="./assets/js/controllers/admin.js"></script>
         <script src="./assets/js/dataTables/jquery.dataTables.min.js"></script>
         <script src="./assets/js/dataTables/dataTables.bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -140,6 +140,7 @@
 
             // define routes
             app.route({view: 'dasboard', load: 'dasboard.html' });
+            app.route({view: 'users', load: 'users.html', onReady: function() {Admin.init()} });
             app.route({view: 'tables', load: 'tables.html' });
             app.route({view: 'notifications', load: 'notifications.html' });
             app.route({view: 'company-cars', load: 'company-cars.html' });
