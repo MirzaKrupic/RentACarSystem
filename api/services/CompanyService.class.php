@@ -106,11 +106,11 @@ class CompanyService extends BaseService{
   }
 
   public function reset($user){
-  $db_user = $this->dao->get_company_by_token($user['token']);
+    $db_user = $this->dao->get_company_by_token($user['token']);
 
-  if (!isset($db_user['id'])) throw new Exception("Invalid token", 400);
+    if (!isset($db_user['id'])) throw new Exception("Invalid token", 400);
 
-  $this->dao->update($db_user['id'], ['password' => md5($user['password']), 'token' => NULL]);
+    $this->dao->update($db_user['id'], ['password' => md5($user['password']), 'token' => NULL]);
   }
 
 }

@@ -77,7 +77,11 @@ class Login{
 
     static forgot_password(){
       $("#forgot-link").prop('disabled', true);
-      RestClient.post("api/users/forgot", AUtils.form2json("#forgot-form"), function(data){
+      var radioValue = $("input[name='userTypeForg']:checked").val();
+      var type = "NONE";
+      if(radioValue == "company") type = "api/companies/forgot";
+      else if(radioValue == "user") type = "api/users/forgot";
+      RestClient.post(type, AUtils.form2json("#forgot-form"), function(data){
         $("#forgot-form-container").addClass("hidden");
         $("#form-alert").removeClass("hidden");
         $("#form-alert .alert").html(data.message);
@@ -91,11 +95,16 @@ class Login{
 
     static change_password(){
       $("#change-link").prop('disabled', true);
+      var urlPar = new URLSearchParams(window.location.search);
+      var usrType = urlPar.get('type');
+      var type = "NONE";
+      if(usrType == "company") type = "api/companies/reset";
+      if(usrType == "user") type = "api/users/reset";
       console.log(AUtils.form2json("#change-form"));
-      RestClient.post("api/users/reset", AUtils.form2json("#change-form"), function(data){
+      RestClient.post(type, AUtils.form2json("#change-form"), function(data){
         toastr.success("Password changed successfully");
         Login.show_login_form();
-        $("#change-password-form-container").removeClass("hidden");
+        $("#change-password-form-container").addClass("hidden");
       }, function(jqXHR, textStatus, errorThrown){
         $("#change-link").prop('disabled', false);
         alert(error.responseJSON.message);

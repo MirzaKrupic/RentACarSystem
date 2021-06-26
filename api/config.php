@@ -28,7 +28,7 @@ class Config {
     return Config::get_env("SMTP_USER", "mirza.krupic@stu.ibu.edu.ba");
   }
   public static function SMTP_PASSWORD(){
-    return Config::get_env("SMTP_PASSWORD", "%JwDuX");
+    return Config::get_env("SMTP_PASSWORD", null);
   }
 
     /** CDN config */
