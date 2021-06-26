@@ -9,7 +9,7 @@ class Login{
     var urlParams = new URLSearchParams(window.location.search);
      if (urlParams.has('token')){
        $("#change-password-token").val(urlParams.get('token'));
-       showChangePasswordForm();
+       Login.show_change_password_form();
      }
      if(sessionStorage.getItem("showmsg")=='1'){
         toastr.success("Registred successfully");
@@ -17,7 +17,7 @@ class Login{
       }
   }
 
-  static show_change_passwordForm(){
+  static show_change_password_form(){
     $("#change-password-form-container").removeClass("hidden");
     $("#login-form-container").addClass("hidden");
     $("#register-form-container").addClass("hidden");
@@ -77,7 +77,7 @@ class Login{
 
     static forgot_password(){
       $("#forgot-link").prop('disabled', true);
-      RestClient.post("api/companies/forgot", AUtils.form2json("#forgot-form"), function(data){
+      RestClient.post("api/users/forgot", AUtils.form2json("#forgot-form"), function(data){
         $("#forgot-form-container").addClass("hidden");
         $("#form-alert").removeClass("hidden");
         $("#form-alert .alert").html(data.message);
@@ -91,9 +91,11 @@ class Login{
 
     static change_password(){
       $("#change-link").prop('disabled', true);
-      RestClient.post("api/companies/reset", AUtils.form2json("#change-form"), function(data){
-        window.localStorage.setItem("token", data.token);
-        window.location = "index.html";
+      console.log(AUtils.form2json("#change-form"));
+      RestClient.post("api/users/reset", AUtils.form2json("#change-form"), function(data){
+        toastr.success("Password changed successfully");
+        Login.show_login_form();
+        $("#change-password-form-container").removeClass("hidden");
       }, function(jqXHR, textStatus, errorThrown){
         $("#change-link").prop('disabled', false);
         alert(error.responseJSON.message);
