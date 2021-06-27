@@ -1,6 +1,7 @@
 class Car{
 
   static init(){
+    Car.getBrands();
     $("#add-car").validate({
       submitHandler: function(form, event) {
         event.preventDefault();
@@ -106,10 +107,60 @@ class Car{
   }
 
   static pre_edit(id){
-  RestClient.get("api/companies/cars/"+id, function(data){
-    AUtils.json2form("#add-car", data);
-    $("#brandsdropdown").val(data.brand_id);
-    $("#add-car-modal").modal("show");
-  });
-}
+    RestClient.get("api/companies/cars/"+id, function(data){
+      AUtils.json2form("#add-car", data);
+      $("#brandsdropdown").val(data.brand_id);
+      $("#add-car-modal").modal("show");
+    });
+  }
+
+  static getBrands(){
+    RestClient.get("api/brands/all", function(data){
+      for(var i = 0; i < data.length; i++){
+        var option = document.createElement("option");
+        option.value = data[i].id;
+        option.text = data[i].name;
+        document.getElementById('brandsdropdown').appendChild(option);
+      }
+    });
+  }
+
+  static file2base64(event){
+     var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
+     var imgurl = null;
+     console.log("event fgile");
+     console.log(event.files);
+     var f = event.files[0];
+
+     var reader = new FileReader();
+     // Closure to capture the file information.
+     reader.onload = (function(theFile) {
+         return function(e) {
+             // Render thumbnail.
+             //$('#upload-img').attr('src',e.target.result);
+             var upload = {
+               name: f.name,
+               content: e.target.result.split(',')[1]
+             };
+             $.ajax({
+                  url: "api/companies/cdn",
+                  type: "POST",
+                  data: JSON.stringify(upload),
+                  contentType: "application/json",
+                  beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+                  success: function(data) {
+                      imgurl = data.url;
+                      $('input[name="image"]').val(imgurl);
+                      console.log($('#image').val());
+                  },
+                  error: function(jqXHR, textStatus, errorThrown ){
+                    toastr.error(jqXHR.responseJSON.message);
+                    console.log(jqXHR);
+                  }
+               });
+         };
+     })(f);
+     // Read in the image file as a data URL.
+     reader.readAsDataURL(f);
+   }
 }
