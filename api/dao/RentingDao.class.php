@@ -19,6 +19,10 @@ class RentingDao extends BaseDao{
     return $this->query("SELECT * FROM rentings WHERE return_date = :rdate", ["rdate" => $date]);
   }
 
+  public function cron_renting($date){
+    return $this->query("UPDATE rentings r, cars c SET r.status = 'DONE', c.status = 'FOR RENT' WHERE r.return_date <= :rdate AND c.id = r.car_id", ["rdate" => $date]);
+  }
+
   public function get_rentings($user_id, $offset, $limit, $search, $order, $total=FALSE){
     list($order_column, $order_direction) = self::parse_order($order);
     $params = ["user_id" => $user_id];

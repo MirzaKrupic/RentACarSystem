@@ -18,6 +18,24 @@ Flight::route('POST /users/rentings/add', function(){
 });
 
 /**
+ * @OA\Post(path="/cron", tags={"rentings"}, security={{"ApiKeyAuth": {}}},
+ *   @OA\RequestBody(description="Basic company info", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+ *    				 @OA\Property(property="return_date", required="false", type="date", example="xxxx-xx-xx",	description="Return date of renting" ),
+ *          )
+ *       )
+ *     ),
+ *  @OA\Response(response="200", description="Renting added")
+ * )
+ */
+
+Flight::route('POST /cron', function(){
+    Flight::rentingService()->cron_renting(Flight::request()->data->getData());
+    Flight::json(["message" => "Cron job successfull."]);
+});
+
+/**
  * @OA\Put(path="/user/rent/{id}", tags={"users", "cars"}, security={{"ApiKeyAuth": {}}},
  *   @OA\Parameter(type="integer", in="path", name="id", default=1),
  *   @OA\RequestBody(description="Basic emiail template info that is going to be updated", required=true,

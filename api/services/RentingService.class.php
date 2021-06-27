@@ -19,6 +19,11 @@ class RentingService extends BaseService{
     return $this->dao->get_rent_by_user_id($id);
   }
 
+  public function cron_renting($date){
+    $date = date(Config::DATE_FORMAT);
+    return $this->dao->cron_renting($date);
+  }
+
   public function get_rentings($user_id,$offset, $limit, $search, $order, $total = FALSE){
     return $this->dao->get_rentings($user_id, $offset, $limit, $search, $order, $total);
   }
