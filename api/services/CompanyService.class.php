@@ -14,8 +14,8 @@ class CompanyService extends BaseService{
     $this->smtpClient = new SMTPClient();
   }
 
-  public function get_companies($id, $offset, $limit, $search, $order){
-    return $this->dao->get_companies($id, $offset, $limit, $search, $order);
+  public function get_companies($id, $offset, $limit, $search, $order, $total = FALSE){
+    return $this->dao->get_companies($id, $offset, $limit, $search, $order, $total);
   }
 
   public function login($company){

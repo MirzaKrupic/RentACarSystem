@@ -12,13 +12,15 @@
  */
 
 Flight::route('GET /admin/companies', function(){
-  $id = Flight::query('id');
   $limit = Flight::query('limit', 10);
   $offset = Flight::query('offset', 0);
   $search = Flight::query('search');
   $order = Flight::query('order', '-id');
 
-  Flight::json(Flight::companyService()->get_companies($id, $offset, $limit, $search, $order));
+  $total = Flight::companyService()->get_companies($offset, $limit, $search, $order, TRUE);
+  header('total-records: ' . $total['total']);
+
+  Flight::json(Flight::companyService()->get_companies($offset, $limit, $search, $order, FALSE));
 });
 
 /**
