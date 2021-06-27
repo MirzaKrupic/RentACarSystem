@@ -227,9 +227,9 @@ function save_user(){
     var url = "api/companies/update/";
   }
   RestClient.put(url, user, function(data){
-    getProfile();
     $("#edit-user-modal").modal("hide");
   });
+    getProfile();
 }
 
 function get_history(){

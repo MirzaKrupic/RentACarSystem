@@ -189,4 +189,36 @@ Flight::route('POST /companies/reset', function(){
   Flight::json(["message" => "Your password has been changed"]);
 });
 
+/**
+*
+ * @OA\Get(
+ *     path="/admin/companies/{id}",tags={"admin"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of user"),
+ *     @OA\Response(response="200", description="List users from database by ID")
+ * )
+ */
+
+Flight::route('GET /admin/companies/@id', function($id){
+    Flight::json(Flight::companyService()->get_by_id($id));
+});
+
+/**
+ * @OA\Put(path="/admin/companies/{id}", tags={"admin"}, security={{"ApiKeyAuth": {}}},
+ *   @OA\Parameter(type="integer", in="path", name="id", default=1),
+ *   @OA\RequestBody(description="Basic emiail template info that is going to be updated", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+ *    				 @OA\Property(property="model", required="true", type="string", example="audi",	description="Model of the car" ),
+ *    				 @OA\Property(property="brand_id", required="true", type="integer", example="subject",	description="10" ),
+ *          )
+ *       )
+ *     ),
+ *     @OA\Response(response="200", description="Update email template")
+ * )
+ */
+
+Flight::route('PUT /admin/companies/@id', function($id){
+  Flight::json(Flight::companyService()->update($id, Flight::request()->data->getData()));
+});
+
 ?>

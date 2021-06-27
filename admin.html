@@ -83,10 +83,7 @@
                                 <a href="#users"><i class="fa fa-user fa-fw"></i> Users</a>
                             </li>
                             <li>
-                                <a href="#company-cars"><i class="fa fa-table fa-fw"></i> Company Cars</a>
-                            </li>
-                            <li>
-                                <a href="#notifications"><i class="fa fa-table fa-fw"></i> Notifications</a>
+                                <a href="#companies"><i class="fa fa-table fa-fw"></i> Companies</a>
                             </li>
                             <li class="admin-stuff">
                               <a href="index.html"><i class="fa fa-arrow-left fa-fw"></i>Back</a>
@@ -101,7 +98,7 @@
               <section id="users" data-load="users.html" ></section>
               <section id="tables" data-load="tables.html" ></section>
               <section id="notifications" data-load="notifications.html" ></section>
-              <section id="company-cars" data-load="company-cars.html" ></section>
+              <section id="companies" data-load="companies.html" ></section>
             </main>
 
         </div>
@@ -139,11 +136,8 @@
             var app = $.jQuerySPApp({defaultView  : "dashboard"}); // initialize
 
             // define routes
-            app.route({view: 'dasboard', load: 'dasboard.html' });
-            app.route({view: 'users', load: 'users.html', onReady: function() {Admin.init()} });
-            app.route({view: 'tables', load: 'tables.html' });
-            app.route({view: 'notifications', load: 'notifications.html' });
-            app.route({view: 'company-cars', load: 'company-cars.html' });
+            app.route({view: 'users', load: 'users.html', onReady: function() {Admin.init_user()} });
+            app.route({view: 'companies', load: 'companies.html', onReady: function() {Admin.init_company()} });
             // run app
             app.run();
 
