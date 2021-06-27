@@ -23,12 +23,8 @@ class UserService extends BaseService{
   $this->dao->update($db_user['id'], ['password' => md5($user['password']), 'token' => NULL]);
 }
 
-  public function get_users($search, $offset, $limit, $order){
-    if($search){
-      return $this->dao->get_users($search, $offset, $limit, $order);
-    }else{
-      return $this->dao->get_all($offset, $limit, $order);
-    }
+  public function get_users($search, $offset, $limit, $order, $total = FALSE){
+      return $this->dao->get_users($search, $offset, $limit, $order, $total);
   }
 
   public function forgot($user){

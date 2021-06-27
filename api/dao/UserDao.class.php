@@ -6,13 +6,25 @@ class UserDao extends BaseDao{
     parent::__construct("users");
   }
 
-  public function get_users($search, $offset, $limit, $order ="-id"){
+  public function get_users($offset, $limit, $search = "aaa", $order, $total = FALSE){
     list($order_column, $order_direction) = self::parse_order($order);
-
-    return $this->query("SELECT * FROM users
-                        WHERE LOWER(name) LIKE CONCAT('%', :name, '%')
-                        ORDER BY ${order_column} ${order_direction}
-                        LIMIT ${limit} OFFSET ${offset}", ["name" => strtolower($search)]);
+    if ($total){
+       $query = "SELECT COUNT(*) AS total ";
+     }else{
+       $query = "SELECT * ";
+     }
+    $query .= "FROM users ";
+    if(isset($search)){
+      $query .= "WHERE LOWER(name) LIKE CONCAT('%', :search, '%') ";
+      $params['search'] = strtolower($search);
+    }
+    if ($total){
+      return $this->query_unique($query, $params);
+    }else{
+      $query .="ORDER BY ${order_column} ${order_direction} ";
+      $query .="LIMIT ${limit} OFFSET ${offset}";
+      return $this->query($query, $params);
+    }
   }
 
   public function get_user_by_email($mail){
