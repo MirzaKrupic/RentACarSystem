@@ -34,9 +34,10 @@ class Admin{
       submitHandler: function(form, event) {
         event.preventDefault();
         var data = AUtils.form2json($(form));
-        console.log(data);
         if (data.id){
           Admin.update_brand(data);
+        }else{
+          Admin.add_brand(data);
         }
       }
     });
@@ -232,6 +233,15 @@ class Admin{
     RestClient.get("api/brands/"+id, function(data){
       AUtils.json2form("#edit-brand", data);
       $("#edit-brand-modal").modal("show");
+    });
+  }
+
+  static add_brand(brand){
+    RestClient.post("api/admin/brands/add", brand, function(data){
+      toastr.success("Brarnd is successfully added");
+      Admin.get_all_brands()
+      $("#edit-brand").trigger("reset");
+      $("#edit-brand-modal").modal("hide");
     });
   }
 }

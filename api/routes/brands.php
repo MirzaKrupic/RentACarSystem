@@ -46,4 +46,21 @@ Flight::route('PUT /admin/brands/@id', function($id){
   Flight::json(Flight::brandService()->update($id, $data));
 });
 
+/**
+ * @OA\Post(path="/admin/brands/add", tags={"admin", "brands"}, security={{"ApiKeyAuth": {}}},
+ *   @OA\RequestBody(description="Basic brand info", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+ *    				 @OA\Property(property="name", required="true", type="string", example="gold",	description="Brand's name" ),
+ *          )
+ *       )
+ *     ),
+ *  @OA\Response(response="200", description="Brand added")
+ * )
+ */
+
+Flight::route('POST /admin/brands/add', function(){
+  Flight::json(Flight::brandService()->add_brand(Flight::request()->data->getData()));
+});
+
 ?>
