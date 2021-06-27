@@ -31,11 +31,11 @@ Flight::route('GET /admin/companies', function(){
  *    				 @OA\Property(property="name", required="true", type="string", example="Companies name",	description="Name of the company" ),
  *    				 @OA\Property(property="address", required="false", type="string", example="My address",	description="Address of company" ),
  *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="Company's email address" ),
- *    				 @OA\Property(property="address", required="true", type="string", example="Address 22",	description="Company's address" ),
+ *    				 @OA\Property(property="phone", required="true", type="string", example="066066066",	description="Company's phone number" ),
  *          )
  *       )
  *     ),
- *  @OA\Response(response="200", description="Message that company has been created.")
+ *  @OA\Response(response="200", description="Company has been added to the database")
  * )
  */
 
@@ -52,11 +52,12 @@ Flight::route('POST /admin/companies', function(){
  *    				 @OA\Property(property="name", required="true", type="string", example="My name",	description="Name of the company" ),
  *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="Company's email address" ),
  *    				 @OA\Property(property="address", required="false", type="string", example="My address",	description="Address of company" ),
- *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
+ *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" ),
+ *    				 @OA\Property(property="phone", required="true", type="string", example="066066066",	description="Company's phone number" )
  *          )
  *       )
  *     ),
- *  @OA\Response(response="200", description="Message that company has been created.")
+ *  @OA\Response(response="200", description="Company has been added to the database")
  * )
  */
 
@@ -105,7 +106,7 @@ Flight::route('GET /companies/confirm/@token', function($token){
  * @OA\Get(
  *     path="/companies/profile",tags={"companies"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(),
- *     @OA\Response(response="200", description="List users from database by ID")
+ *     @OA\Response(response="200", description="List users from database by ID of logged in company")
  * )
  */
 
@@ -125,7 +126,7 @@ Flight::route('GET /companies/profile', function(){
  *    				 @OA\Property(property="status", type="string", example="ACTIVE",	description="Account status" ))
  *       )
  *     ),
- *     @OA\Response(response="200", description="Update user in database")
+ *     @OA\Response(response="200", description="Update company in database")
  * )
  */
 
@@ -139,7 +140,7 @@ Flight::route('PUT /companies/update', function(){
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
- *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
+ *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="Company's email address" ),
  *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
  *          )
  *       )
@@ -158,7 +159,7 @@ Flight::route('POST /users/login', function(){
  *   @OA\RequestBody(description="Basic user info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
- *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" )
+ *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="Company's email address" )
  *          )
  *       )
  *     ),
@@ -182,7 +183,7 @@ Flight::route('POST /companies/forgot', function(){
  *          )
  *       )
  *     ),
- *  @OA\Response(response="200", description="Message that user has changed password.")
+ *  @OA\Response(response="200", description="Message that company has changed password.")
  * )
  */
 Flight::route('POST /companies/reset', function(){
@@ -195,8 +196,8 @@ Flight::route('POST /companies/reset', function(){
 *
  * @OA\Get(
  *     path="/admin/companies/{id}",tags={"admin"}, security={{"ApiKeyAuth": {}}},
- *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of user"),
- *     @OA\Response(response="200", description="List users from database by ID")
+ *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of company"),
+ *     @OA\Response(response="200", description="List company from database by ID")
  * )
  */
 
@@ -210,13 +211,15 @@ Flight::route('GET /admin/companies/@id', function($id){
  *   @OA\RequestBody(description="Basic emiail template info that is going to be updated", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
- *    				 @OA\Property(property="model", required="true", type="string", example="audi",	description="Model of the car" ),
- *    				 @OA\Property(property="brand_id", required="true", type="integer", example="subject",	description="10" ),
+ *    				 @OA\Property(property="name", required="true", type="string", example="My name",	description="Name of the company" ),
+ *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="Company's email address" ),
+ *    				 @OA\Property(property="address", required="false", type="string", example="My address",	description="Address of company" ),
+ *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" ),
+ *    				 @OA\Property(property="phone", required="true", type="string", example="066066066",	description="Company's phone number" )
  *          )
  *       )
  *     ),
- *     @OA\Response(response="200", description="Update email template")
- * )
+ *     @OA\Response(response="200", description="Update company as admin
  */
 
 Flight::route('PUT /admin/companies/@id', function($id){

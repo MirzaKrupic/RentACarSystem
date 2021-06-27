@@ -4,9 +4,9 @@
  * @OA\Get(path="/companies/cars", tags={"companies", "cars"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
- *     @OA\Parameter(type="string", in="query", name="search", description="Search string for accounts. Case insensitive search."),
+ *     @OA\Parameter(type="string", in="query", name="search", description="Search string for cars. Case insensitive search."),
  *     @OA\Parameter(type="string", in="query", name="order", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name descending order by column_name"),
- *     @OA\Response(response="200", description="List email templates for user")
+ *     @OA\Response(response="200", description="List cars for company")
  * )
  */
 Flight::route('GET /companies/cars', function(){
@@ -27,7 +27,7 @@ Flight::route('GET /companies/cars', function(){
  *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
  *     @OA\Parameter(type="string", in="query", name="order", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name descending order by column_name"),
- *     @OA\Response(response="200", description="List email templates for user")
+ *     @OA\Response(response="200", description="List all cars from database")
  * )
  */
 Flight::route('GET /cars/all', function(){
@@ -40,8 +40,8 @@ Flight::route('GET /cars/all', function(){
 
 /**
  * @OA\Get(path="/companies/cars/{id}", tags={"companies", "cars"}, security={{"ApiKeyAuth": {}}},
- *     @OA\Parameter(type="integer", in="path", name="id", default=9, description="Id of email template"),
- *     @OA\Response(response="200", description="Fetch individual email template")
+ *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Id of a car"),
+ *     @OA\Response(response="200", description="Fetch individual car from company by ID")
  * )
  */
 Flight::route('GET /companies/cars/@id', function($id){
@@ -55,18 +55,12 @@ Flight::route('GET /companies/cars/@id', function($id){
 });
 
 /**
- * @OA\Get(path="/cars/{id}", tags={"companies", "cars"}, security={{"ApiKeyAuth": {}}},
- *     @OA\Parameter(type="integer", in="path", name="id", default=9, description="Id of email template"),
- *     @OA\Response(response="200", description="Fetch individual email template")
+ * @OA\Get(path="/cars/{id}", tags={"cars"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Parameter(type="integer", in="path", name="id", default=9, description="Id of a car"),
+ *     @OA\Response(response="200", description="Fetch cars by ID")
  * )
  */
 Flight::route('GET /cars/@id', function($id){
-  /*$template = Flight::emailTemplateService()->get_by_id($id);
-  if ($template['account_id'] != Flight::get('user')['aid']){
-    Flight::json([]);
-  }else{
-    Flight::json($template);
-  }*/
   Flight::json(Flight::carService()->get_car_by_id($id));
 });
 
@@ -75,12 +69,12 @@ Flight::route('GET /cars/@id', function($id){
  *   @OA\RequestBody(description="Basic company info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
- *    				 @OA\Property(property="model", required="true", type="string", example="gold",	description="Company's email address" ),
- *             @OA\Property(property="brand_id", required="true", type="string", example="1",	description="Password" ),
- *    				 @OA\Property(property="number_of_seats", required="true", type="integer", example="4",	description="Model of the car" ),
- *    				 @OA\Property(property="number_of_gears", required="true", type="integer", example="4",	description="10" ),
- *    				 @OA\Property(property="number_of_doors", required="true", type="integer", example="4",	description="10" ),
- *    				 @OA\Property(property="licence_plate", required="true", type="string", example="xxx-xxx-xxx",	description="Model of the car" )
+ *    				 @OA\Property(property="model", required="true", type="string", example="gold",	description="Car's model" ),
+ *             @OA\Property(property="brand_id", required="true", type="integer", example="1",	description="ID of car's brand" ),
+ *    				 @OA\Property(property="number_of_seats", required="true", type="integer", example="4",	description="Number of seats in a car" ),
+ *    				 @OA\Property(property="number_of_gears", required="true", type="integer", example="4",	description="Number of gears in a car" ),
+ *    				 @OA\Property(property="number_of_doors", required="true", type="integer", example="4",	description="Number of doors on a car" ),
+ *    				 @OA\Property(property="licence_plate", required="true", type="string", example="xxx-xxx-xxx",	description="Licence plate of car" )
  *          )
  *       )
  *     ),
@@ -98,12 +92,16 @@ Flight::route('POST /companies/cars/add', function(){
  *   @OA\RequestBody(description="Basic emiail template info that is going to be updated", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
- *    				 @OA\Property(property="model", required="true", type="string", example="audi",	description="Model of the car" ),
- *    				 @OA\Property(property="brand_id", required="true", type="integer", example="subject",	description="10" ),
+ *    				 @OA\Property(property="model", required="true", type="string", example="gold",	description="Car's model" ),
+ *             @OA\Property(property="brand_id", required="true", type="integer", example="1",	description="ID of car's brand" ),
+ *    				 @OA\Property(property="number_of_seats", required="true", type="integer", example="4",	description="Number of seats in a car" ),
+ *    				 @OA\Property(property="number_of_gears", required="true", type="integer", example="4",	description="Number of gears in a car" ),
+ *    				 @OA\Property(property="number_of_doors", required="true", type="integer", example="4",	description="Number of doors on a car" ),
+ *    				 @OA\Property(property="licence_plate", required="true", type="string", example="xxx-xxx-xxx",	description="Licence plate of car" )
  *          )
  *       )
  *     ),
- *     @OA\Response(response="200", description="Update email template")
+ *     @OA\Response(response="200", description="Car updated")
  * )
  */
 

@@ -4,12 +4,12 @@
  *   @OA\RequestBody(description="Basic company info", required=true,
  *       @OA\MediaType(mediaType="application/json",
  *    			@OA\Schema(
- *             @OA\Property(property="car_id", required="true", type="string", example="1",	description="Password" ),
- *    				 @OA\Property(property="return_date", required="false", type="date", example="xxxx-xx-xx",	description="Date of birth of the user" ),
+ *             @OA\Property(property="car_id", required="true", type="string", example="1",	description="ID of car" ),
+ *    				 @OA\Property(property="return_date", required="false", type="date", example="xxxx-xx-xx",	description="Return date of renting" ),
  *          )
  *       )
  *     ),
- *  @OA\Response(response="200", description="Car added")
+ *  @OA\Response(response="200", description="Renting added")
  * )
  */
 
@@ -36,18 +36,12 @@ Flight::route('PUT /users/rent/@id', function($id){
 
 /**
  * @OA\Get(path="/users/rentings/", tags={"users", "rentings"}, security={{"ApiKeyAuth": {}}},
- *     @OA\Parameter(type="integer", in="path", name="id", default=9, description="Id of email template"),
- *     @OA\Response(response="200", description="Fetch individual email template")
+ *     @OA\Parameter(),
+ *     @OA\Response(response="200", description="Fetch all rentings of logged user")
  * )
  */
 
 Flight::route('GET /users/rentings/', function(){
-  /*$template = Flight::emailTemplateService()->get_by_id($id);
-  if ($template['account_id'] != Flight::get('user')['aid']){
-    Flight::json([]);
-  }else{
-    Flight::json($template);
-  }*/
 
   Flight::json(Flight::rentingService()->get_rent_by_user_id(Flight::get('user')['id']));
 });
@@ -56,12 +50,12 @@ Flight::route('GET /users/rentings/', function(){
  * @OA\Get(path="/users/rentings/all/", tags={"users", "rentings"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
- *     @OA\Parameter(type="string", in="query", name="search", description="Search string for accounts. Case insensitive search."),
+ *     @OA\Parameter(type="string", in="query", name="search", description="Search string for rentings. Case insensitive search."),
  *     @OA\Parameter(type="string", in="query", name="order", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name descending order by column_name"),
- *     @OA\Response(response="200", description="List email templates for user")
+ *     @OA\Response(response="200", description="List all rentings of a logged in user")
  * )
  */
- 
+
 Flight::route('GET /users/rentings/all/', function(){
   $account_id = Flight::get('user')['id'];
   $offset = Flight::query('offset', 0);
