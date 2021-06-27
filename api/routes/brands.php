@@ -11,9 +11,13 @@
 Flight::route('GET /brands/all', function(){
   $offset = Flight::query('offset', 0);
   $limit = Flight::query('limit', 25);
+  $search = Flight::query('search');
   $order = Flight::query('order', '-id');
 
-  Flight::json(Flight::brandService()->get_all_brands($offset, $limit, $order));
+  $total = Flight::brandService()->get_brands($offset, $limit, $search, $order, TRUE);
+  header('total-records: ' . $total['total']);
+
+  Flight::json(Flight::brandService()->get_brands($offset, $limit, $search, $order, FALSE));
 });
 
 /**

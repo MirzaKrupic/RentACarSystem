@@ -11,8 +11,8 @@ class BrandService extends BaseService{
     $this->dao = new BrandDao();
   }
 
-  public function get_all_brands($offset, $limit, $order){
-    return $this->dao->get_all($offset, $limit, $order);
+  public function get_brands($offset, $limit, $search, $order, $total = FALSE){
+    return $this->dao->get_brands($offset, $limit, $search, $order, $total);
   }
 
   public function add_brand($brand){
