@@ -22,7 +22,7 @@ class SMTPClient {
         $message = (new Swift_Message('Confirm your account'))
           ->setFrom(['mirza.krupic@stu.ibu.edu.ba' => 'Rent a car'])
           ->setTo([$user['mail']])
-          ->setBody('Here is the confirmation link: http://'.Config::DB_HOST().'/api/users/confirm/'.$user['token'])
+          ->setBody('Here is the confirmation link: https://rent-a-car-system-iinfw.ondigitalocean.app/api/users/confirm/'.$user['token'])
           ->setContentType('text/html')
         ;
 
@@ -39,7 +39,7 @@ class SMTPClient {
         $message = (new Swift_Message('Confirm your account'))
           ->setFrom(['mirza.krupic@stu.ibu.edu.ba' => 'Rent a car'])
           ->setTo([$user['mail']])
-          ->setBody('Here is the confirmation link: http://'.Config::DB_HOST().'/api/companies/confirm/'.$user['token'])
+          ->setBody('Here is the confirmation link: https://rent-a-car-system-iinfw.ondigitalocean.app/api/companies/confirm/'.$user['token'])
           ->setContentType('text/html')
         ;
 
@@ -56,7 +56,7 @@ class SMTPClient {
         $message = (new Swift_Message('Reset Your Password'))
           ->setFrom(['mirza.krupic@stu.ibu.edu.ba' => 'Rent a car'])
           ->setTo([$user['mail']])
-          ->setBody('Here is the recovery link: http://'.Config::DB_HOST().'/login.html?token='.$user['token'].'&type='.$type)
+          ->setBody('Here is the recovery link: https://rent-a-car-system-iinfw.ondigitalocean.app/login.html?token='.$user['token'].'&type='.$type)
           ->setContentType('text/html')
         ;
 
