@@ -58,7 +58,7 @@ Flight::route('GET /admin/users/@id', function($id){
  *    			@OA\Schema(
  *    				 @OA\Property(property="name", required="true", type="string", example="My name",	description="Name of the user" ),
  *    				 @OA\Property(property="mail", required="true", type="string", example="myemail@gmail.com",	description="User's email address" ),
- *    				 @OA\Property(property="dob", required="false", type="date", example="xxxx-xx-xx",	description="Date of birth of the user" ),
+ *    				 @OA\Property(property="phone", required="false", type="date", example="060060060",	description="Date of birth of the user" ),
  *             @OA\Property(property="password", required="true", type="string", example="12345",	description="Password" )
  *          )
  *       )
