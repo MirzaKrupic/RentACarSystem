@@ -47,6 +47,7 @@ class Profile{
          document.getElementById("user-mail").innerHTML = data.mail;
          document.getElementById("user-phone").innerHTML = data.phone;
          document.getElementById("user-address").innerHTML = data.address;
+         document.getElementById("user-address-det").innerHTML = data.address;
          document.getElementById("profile-image").src = data.image;
 
          if(sessionStorage.getItem("showmsg")=='1'){
