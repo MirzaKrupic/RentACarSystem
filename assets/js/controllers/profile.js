@@ -48,7 +48,7 @@ class Profile{
          document.getElementById("user-phone").innerHTML = data.phone;
          document.getElementById("user-address").innerHTML = data.address;
          document.getElementById("user-address-det").innerHTML = data.address;
-         document.getElementById("profile-image").src = data.image;
+         $("#profile-image").attr("src", data.image);
 
          if(sessionStorage.getItem("showmsg")=='1'){
             toastr.success("User updated successfully");
