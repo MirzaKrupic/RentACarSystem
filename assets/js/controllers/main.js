@@ -6,6 +6,7 @@ class Main{
 
   static get_all_cars(){
     var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
+    document.getElementById("carcardssection").innerHTML += "";
     $.ajax({
          url: "api/cars/all",
          type: "GET",
