@@ -22,9 +22,28 @@ Flight::route('GET /brands/all', function(){
  *     @OA\Response(response="200", description="List brands by ID")
  * )
  */
- 
+
 Flight::route('GET /brands/@id', function($id){
   Flight::json(Flight::brandService()->get_by_id($id));
+});
+
+/**
+ * @OA\Put(
+ *     path="/admin/brands/{id}",tags={"brands"}, security={{"ApiKeyAuth": {}}},
+ *   @OA\Parameter(type="integer", in="path", name="id", default=1),
+ *   @OA\RequestBody(description="Brand info", required=true,
+ *       @OA\MediaType(mediaType="application/json",
+ *    			@OA\Schema(
+ *    			@OA\Property(property="name", required="true", type="string", example="My Test Account",	description="Name of the account" ))
+ *       )
+ *     ),
+ *     @OA\Response(response="200", description="Update user in database")
+ * )
+ */
+
+Flight::route('PUT /admin/brands/@id', function($id){
+  $data = Flight::request()->data->getData();
+  Flight::json(Flight::brandService()->update($id, $data));
 });
 
 ?>
