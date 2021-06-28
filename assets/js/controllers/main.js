@@ -6,7 +6,7 @@ class Main{
 
   static get_all_cars(){
     var user_info = AUtils.parse_jwt(window.localStorage.getItem("token"));
-    document.getElementById("carcardssection").innerHTML += "";
+    Main.clearBox("carcardssection");
     $.ajax({
          url: "api/cars/all",
          type: "GET",
@@ -78,5 +78,13 @@ class Main{
 
     RestClient.put("api/users/rent/"+car, null, function(data){
     });
+  }
+
+  static clearBox(elementID) {
+    var div = document.getElementById(elementID);
+
+    while(div.firstChild) {
+        div.removeChild(div.firstChild);
+    }
   }
 }

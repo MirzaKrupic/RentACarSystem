@@ -11,6 +11,8 @@ class Car{
         if (data.id){
           Car.update(data);
         }else{
+          if(data["image"] == "") delete data["image"];
+          console.log(data);
           Car.add(data);
         }
       }
@@ -25,66 +27,66 @@ class Car{
       for(var i = 0; i < data.length; i++){
         globalBrands.push(data[i]);
       }
-    });
-    $('#cars-table').DataTable( {
-        processing: true,
-        serverSide: true,
-        bDestroy: true,
-        pagingType: "simple",
-        preDrawCallback: function( settings ) {
-          if ( settings.jqXHR){
-          settings._iRecordsTotal = settings.jqXHR.getResponseHeader('total-records');
-          settings._iRecordsDisplay = settings.jqXHR.getResponseHeader('total-records');
-          }
-      },
-        ajax: {
-          url: "api/companies/cars",
-          type: "GET",
-          beforeSend: function(xhr){
-            xhr.setRequestHeader('Authentication', localStorage.getItem("token"));
-          },
-          dataSrc: function(resp){
-            console.log(resp);
-            return resp;
-          },
-          data: function ( d ) {
-            d.offset = d.start;
-            d.limit = d.length;
-            d.search = d.search.value;
-            d.order = encodeURIComponent((d.order[0].dir == 'asc' ? "-" : "+")+d.columns[d.order[0].column].data);
-            delete d.start;
-            delete d.length;
-            delete d.columns;
-            delete d.draw;
-            console.log(d);
-          }
+      $('#cars-table').DataTable( {
+          processing: true,
+          serverSide: true,
+          bDestroy: true,
+          pagingType: "simple",
+          preDrawCallback: function( settings ) {
+            if ( settings.jqXHR){
+            settings._iRecordsTotal = settings.jqXHR.getResponseHeader('total-records');
+            settings._iRecordsDisplay = settings.jqXHR.getResponseHeader('total-records');
+            }
         },
-        columns: [
-          { "data": "id",
-            "render": function ( data, type, row, meta ) {
-              return '<span class="badge">'+data+'</span><a class="pull-right" style="font-size: 15px; cursor: pointer;" onclick="Car.pre_edit('+data+')"><i class="fa fa-edit"></i></a>';
+          ajax: {
+            url: "api/companies/cars",
+            type: "GET",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader('Authentication', localStorage.getItem("token"));
+            },
+            dataSrc: function(resp){
+              console.log(resp);
+              return resp;
+            },
+            data: function ( d ) {
+              d.offset = d.start;
+              d.limit = d.length;
+              d.search = d.search.value;
+              d.order = encodeURIComponent((d.order[0].dir == 'asc' ? "-" : "+")+d.columns[d.order[0].column].data);
+              delete d.start;
+              delete d.length;
+              delete d.columns;
+              delete d.draw;
+              console.log(d);
             }
           },
-          { "data": "model" },
-          { "data": "brand_id",
-            "render": function ( data, type, row, meta ) {
-              var brandName = null;
-              for(var i = 0; i < globalBrands.length; i++){
-                if(globalBrands[i].id == data){
-                  brandName = globalBrands[i].name;
-                }
+          columns: [
+            { "data": "id",
+              "render": function ( data, type, row, meta ) {
+                return '<span class="badge">'+data+'</span><a class="pull-right" style="font-size: 15px; cursor: pointer;" onclick="Car.pre_edit('+data+')"><i class="fa fa-edit"></i></a>';
               }
-              return brandName;
-            }
-          },
-          { "data": "created_at" },
-          { "data": "number_of_doors" },
-          { "data": "number_of_gears" },
-          { "data": "number_of_seats" },
-          { "data": "licence_plate" },
-          { "data": "status" }
-        ]
-    } );
+            },
+            { "data": "model" },
+            { "data": "brand_id",
+              "render": function ( data, type, row, meta ) {
+                var brandName = null;
+                for(var i = 0; i < globalBrands.length; i++){
+                  if(globalBrands[i].id == data){
+                    brandName = globalBrands[i].name;
+                  }
+                }
+                return brandName;
+              }
+            },
+            { "data": "created_at" },
+            { "data": "number_of_doors" },
+            { "data": "number_of_gears" },
+            { "data": "number_of_seats" },
+            { "data": "licence_plate" },
+            { "data": "status" }
+          ]
+      } );
+    });
   }
 
   static add(car){
