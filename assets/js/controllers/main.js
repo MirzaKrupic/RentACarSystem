@@ -12,6 +12,7 @@ class Main{
          type: "GET",
          success: function(data) {
            var html = "";
+           var today = new Date().toISOString().slice(0, 10);
            for(var i = 0; i < data.length; i++){
              html+='<div class="card mb-3">'
                   +'<div class="row no-gutters">'
@@ -41,8 +42,8 @@ class Main{
                   +'<div class="card-body">'
                   +'<label for="start">Return date:</label>'
                   +'<input type="date" id="returnDate'+data[i].id+'" name="trip-start"'
-                  +'value="2021-07-21"'
-                  +'min="2021-07-21" max="2030-12-31">'
+                  +'value="'+today+'"'
+                  +'min="'+today+'" max="2030-12-31">'
                   +'<br>'
                   +'<br>'
                   if(user_info.r == "USER")
