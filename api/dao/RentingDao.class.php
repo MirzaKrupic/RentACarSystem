@@ -46,5 +46,10 @@ class RentingDao extends BaseDao{
       return $this->query($query, $params);
      }
   }
+
+  public function get_chart_all(){
+    $no = 1;
+    return $this->query("SELECT DATE_FORMAT(rented_on_date, '%Y-%m-%d') dat, COUNT(*) cn FROM rentings GROUP BY DATE_FORMAT(rented_on_date, '%Y-%m-%d')", ["no" => $no]);
+  }
 }
 ?>

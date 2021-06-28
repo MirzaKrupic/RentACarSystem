@@ -41,6 +41,10 @@ class RentingService extends BaseService{
     return $this->dao->add($param);
   }
 
+  public function getChart(){
+    return $this->dao->get_chart_all();
+  }
+
 }
 
 ?>

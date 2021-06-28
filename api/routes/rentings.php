@@ -87,4 +87,15 @@ Flight::route('GET /users/rentings/all/', function(){
   Flight::json(Flight::rentingService()->get_rentings($account_id, $offset, $limit, $search, $order));
 });
 
+
+/**
+ * @OA\Get(path="/admin/rentings/chart", tags={"purchases", "admin"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Response(response="200", description="Get purchase chart data")
+ * )
+ */
+Flight::route('GET /admin/rentings/chart', function(){
+  $res=Flight::rentingService()->getChart();
+  Flight::json($res);
+});
+
 ?>

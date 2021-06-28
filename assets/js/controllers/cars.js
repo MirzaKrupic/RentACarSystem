@@ -165,4 +165,16 @@ class Car{
      // Read in the image file as a data URL.
      reader.readAsDataURL(f);
    }
+
+   static chart(){
+    RestClient.get("api/admin/rentings/chart", function(chart_data){
+      Morris.Line({
+          element: 'brands-container',
+          data: chart_data,
+          xkey: 'dat',
+          ykeys: ['cn'],
+          labels: ['Brand']
+        });
+    });
+  }
 }
