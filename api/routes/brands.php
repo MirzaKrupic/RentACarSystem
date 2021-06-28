@@ -67,4 +67,14 @@ Flight::route('POST /admin/brands/add', function(){
   Flight::json(Flight::brandService()->add_brand(Flight::request()->data->getData()));
 });
 
+/**
+ * @OA\Get(path="/admin/brands/chart", tags={"purchases", "admin"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Response(response="200", description="Get brands chart data")
+ * )
+ */
+Flight::route('GET /admin/brands/chart', function(){
+  $res=Flight::brandService()->get_chart_brand();
+  Flight::json($res);
+});
+
 ?>

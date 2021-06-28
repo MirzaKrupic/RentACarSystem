@@ -28,6 +28,9 @@ class BrandService extends BaseService{
       throw new Exception($e->getMessage(), 400, $e);
    }
   }
+  public function get_chart_brand(){
+    return $this->dao->get_chart_brand();
+  }
 
 }
 

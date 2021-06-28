@@ -27,6 +27,10 @@ class BrandDao extends BaseDao{
         return $this->query($query, $params);
       }
     }
+
+    public function get_chart_brand(){
+      return $this->query("SELECT b.name label, COUNT(c.brand_id) value FROM brands b, cars c WHERE b.id = c.brand_id GROUP BY b.name", null);
+    }
 }
 
 ?>

@@ -169,7 +169,7 @@ class Car{
    static chart(){
     RestClient.get("api/admin/rentings/chart", function(chart_data){
       Morris.Line({
-          element: 'brands-container',
+          element: 'rentings-container',
           data: chart_data,
           xkey: 'dat',
           ykeys: ['cn'],
@@ -177,4 +177,14 @@ class Car{
         });
     });
   }
+
+  static chart_brands(){
+  RestClient.get("api/admin/brands/chart", function(chart_data){
+    new Morris.Donut({
+      element: 'brands-container',
+      data: chart_data
+    });
+
+  });
+}
 }
