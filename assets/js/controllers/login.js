@@ -1,6 +1,7 @@
 class Login{
 
   static init(){
+    $('#login-link').prop('disabled', 'disabled');
     if(  window.localStorage.getItem("token")){
       window.location = "index.html";
     }else{
@@ -22,22 +23,26 @@ class Login{
     $("#login-form-container").addClass("hidden");
     $("#register-form-container").addClass("hidden");
     $("#forgot-form-container").addClass("hidden");
+    $('#change-link').prop('disabled', 'disabled');
   }
 
   static show_forgot_form(){
     $("#login-form-container").addClass("hidden");
     $("#forgot-form-container").removeClass("hidden");
+    $('#forgot-link').prop('disabled', 'disabled');
   }
 
   static show_registration_form(){
     $("#login-form-container").addClass("hidden");
     $("#register-form-container").removeClass("hidden");
+    $('#register-link').prop('disabled', 'disabled');
   }
 
   static show_login_form(){
     $("#login-form-container").removeClass("hidden");
     $("#register-form-container").addClass("hidden");
     $("#forgot-form-container").addClass("hidden");
+    $('#login-link').prop('disabled', 'disabled');
   }
 
   static register(){
