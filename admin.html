@@ -97,10 +97,10 @@
             </nav>
 
             <main id="jqueryspapp" role="main">
-              <section id="users" data-load="users.html" ></section>
-              <section id="charts" data-load="charts.html" ></section>
-              <section id="brands" data-load="brands.html" ></section>
-              <section id="companies" data-load="companies.html" ></section>
+              <section id="users" data-load="admin/users.html" ></section>
+              <section id="charts" data-load="admin/charts.html" ></section>
+              <section id="brands" data-load="admin/brands.html" ></section>
+              <section id="companies" data-load="admin/companies.html" ></section>
             </main>
 
         </div>
@@ -136,13 +136,13 @@
 
         <script type="text/javascript">
           $(document).ready(function() {
-            var app = $.jQuerySPApp({defaultView  : "dashboard"}); // initialize
+            var app = $.jQuerySPApp({defaultView  : "users"}); // initialize
 
             // define routes
-            app.route({view: 'users', load: 'users.html', onReady: function() {Admin.init_user()} });
-            app.route({view: 'companies', load: 'companies.html', onReady: function() {Admin.init_company()} });
-            app.route({view: 'brands', load: 'brands.html', onReady: function() {Admin.init_brand()} });
-            app.route({view: 'charts', load: 'charts.html'});
+            app.route({view: 'users', load: 'admin/users.html', onReady: function() {Admin.init_user()} });
+            app.route({view: 'companies', load: 'admin/companies.html', onReady: function() {Admin.init_company()} });
+            app.route({view: 'brands', load: 'admin/brands.html', onReady: function() {Admin.init_brand()} });
+            app.route({view: 'charts', load: 'admin/charts.html'});
             // run app
             app.run();
 
